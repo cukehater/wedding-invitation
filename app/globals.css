@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: var(--font-montserrat), sans-serif;
+  --font-serif-display: var(--font-playfair), serif;
+  --font-script: var(--font-hurricane), cursive;
+  --font-tangerine: var(--font-tangerine-src), cursive;
+  --font-alexbrush: var(--font-alexbrush-src), cursive;
+  --font-body: var(--font-plexkr), sans-serif;
+
+  --color-paper: #edeae6;
+  --color-ink: #2e2a27;
+  --color-accent: #ff9a42;
+}
+
+/* 카드는 430px 폭 기준으로 디자인됐다. 500px 로 키우되 모든 px 값을 다시 쓰지 않도록
+   zoom 으로 통째로 확대한다 (500 / 430 = 1.162791).
+   뷰포트가 500px 미만이면 확대하지 않는다 — 폰에서는 카드가 이미 화면 폭을 다 쓴다. */
+:root {
+  --card-zoom: 1;
+}
+@media (min-width: 500px) {
+  :root {
+    --card-zoom: 1.162791;
+  }
+}
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #edeae6;
+    -webkit-font-smoothing: antialiased;
+    /* 원본에는 line-height 리셋이 없어 브라우저 기본값 normal 로 렌더된다.
+       Tailwind preflight 의 1.5 를 그대로 두면 모든 섹션이 원본보다 세로로 길어진다. */
+    line-height: normal;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  a {
+    color: #d98a9a;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #b96878;
+  }
+  input,
+  textarea,
+  button {
+    font-family: inherit;
+  }
+  ::selection {
+    background: #f7dde3;
+  }
+  div::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes wfade {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes wslide {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes weq {
+  0%,
+  100% {
+    transform: scaleY(0.28);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+@keyframes wpulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+@keyframes wcredit {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

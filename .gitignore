@@ -39,7 +39,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# 원본 산출물 안의 대용량 번들 HTML (29MB, base64 인라인)
-origin/모바일 청첩장 - 김경식 김수민.html
-.DS_Store

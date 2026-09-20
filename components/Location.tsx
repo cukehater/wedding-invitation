@@ -15,12 +15,6 @@ export function Location({ revealRef }: { revealRef: (n: HTMLElement | null) => 
 
       <div className="mx-auto mt-[22px] overflow-hidden rounded-[14px] bg-white">
         <KakaoMap />
-        <a href={`https://map.kakao.com/?q=${encodeURIComponent(VENUE.query)}`}
-          target="_blank" rel="noopener"
-          className="flex h-[42px] items-center justify-center border-t border-[#F1ECEC]
-            text-[12px] tracking-[.02em] text-[#404040]">
-          카카오맵에서 크게 보기
-        </a>
       </div>
 
       <div className="mt-3 flex justify-center gap-2">

@@ -65,9 +65,9 @@ export const GALLERY = Array.from({ length: 10 }, (_, i) => {
 
 // 셋 다 앱 미설치 시 웹으로 폴백되는 링크. 티맵만 커스텀 스킴(앱 전용).
 export const MAP_APPS = [
-  { name: "네이버지도", tint: "#CFE3D4", href: `https://map.naver.com/p/search/${encodeURIComponent(VENUE.query)}` },
-  { name: "티맵", tint: "#D6DDEE", href: `tmap://route?goalname=${encodeURIComponent(VENUE.query)}&goalx=${VENUE.lng}&goaly=${VENUE.lat}` },
-  { name: "카카오맵", tint: "#F3E6C8", href: `https://map.kakao.com/link/to/${encodeURIComponent(VENUE.query)},${VENUE.lat},${VENUE.lng}` },
+  { name: "네이버지도", logo: "/images/naver_map.webp", href: `https://map.naver.com/p/search/${encodeURIComponent(VENUE.query)}` },
+  { name: "티맵", logo: "/images/tmap.svg", href: `tmap://route?goalname=${encodeURIComponent(VENUE.query)}&goalx=${VENUE.lng}&goaly=${VENUE.lat}` },
+  { name: "카카오맵", logo: "/images/kakao_map.webp", href: `https://map.kakao.com/link/to/${encodeURIComponent(VENUE.query)},${VENUE.lat},${VENUE.lng}` },
 ];
 
 export type Guest = { id: string; name: string; date: string; msg: string };

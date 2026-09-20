@@ -18,10 +18,12 @@
    뷰포트가 500px 미만이면 확대하지 않는다 — 폰에서는 카드가 이미 화면 폭을 다 쓴다. */
 :root {
   --card-zoom: 1;
+  --card-w: 430px;
 }
 @media (min-width: 500px) {
   :root {
     --card-zoom: 1.162791;
+    --card-w: 500px;
   }
 }
 

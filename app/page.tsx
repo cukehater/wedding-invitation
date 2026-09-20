@@ -16,12 +16,12 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen justify-center bg-[#EDEAE6]">
+      <BgmToggle />
       <div style={{ zoom: "var(--card-zoom)" }}
         className="relative w-full max-w-[430px] overflow-hidden bg-white
         bg-[url('/images/bg-tile.webp')] bg-[length:430px_auto] bg-top bg-repeat
         font-body text-[#5E5E5E] shadow-[0_0_60px_rgba(60,50,52,.14)]">
 
-        <BgmToggle />
         <Cover />
 
         {/* s2 · MAIN PHOTO */}

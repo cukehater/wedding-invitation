@@ -1,8 +1,7 @@
 import { SectionHeading } from "./SectionHeading";
 import { Accordion } from "./Accordion";
+import { KakaoMap } from "./KakaoMap";
 import { MAP_APPS, TRAFFIC_WAYS, VENUE } from "@/lib/data";
-
-const OSM = `https://www.openstreetmap.org/export/embed.html?bbox=126.9620%2C37.3900%2C126.9780%2C37.3990&layer=mapnik&marker=${VENUE.lat}%2C${VENUE.lng}`;
 
 export function Location({ revealRef }: { revealRef: (n: HTMLElement | null) => void }) {
   return (
@@ -15,8 +14,7 @@ export function Location({ revealRef }: { revealRef: (n: HTMLElement | null) => 
       </div>
 
       <div className="mx-auto mt-[22px] overflow-hidden rounded-[14px] bg-white">
-        <iframe src={OSM} title={`${VENUE.query} 지도`} loading="lazy"
-          className="block aspect-video w-full border-0" />
+        <KakaoMap />
         <a href={`https://map.kakao.com/?q=${encodeURIComponent(VENUE.query)}`}
           target="_blank" rel="noopener"
           className="flex h-[42px] items-center justify-center border-t border-[#F1ECEC]
@@ -30,9 +28,9 @@ export function Location({ revealRef }: { revealRef: (n: HTMLElement | null) => 
           <a key={m.name} href={m.href} target="_blank" rel="noopener"
             // box-content: 원본 버튼이 all:unset 으로 content-box 라 border 2px 가 높이에 더해진다 (총 42px)
             className="box-content flex h-10 cursor-pointer items-center gap-[7px] rounded-[99px] border
-              border-[#EFE9EA] px-4 text-[12.5px] text-[#404040] shadow-[0_1px_4px_rgba(0,0,0,.04)]
+              border-[#EFE9EA] bg-white px-4 text-[12.5px] text-[#404040] shadow-[0_1px_4px_rgba(0,0,0,.04)]
               hover:border-[#E2D2D5]">
-            <span className="h-4 w-4 rounded-[5px]" style={{ background: m.tint }} />
+            <img src={m.logo} alt="" className="h-[18px] w-[18px] select-none rounded-[5px] object-contain" />
             {m.name}
           </a>
         ))}

@@ -1,7 +1,7 @@
 export function Cover() {
   return (
     <section className="relative h-[calc(100svh/var(--card-zoom))] min-h-[560px] overflow-hidden bg-[#EFEAE4]">
-      <img src="/images/cover.jpg" alt="cover"
+      <img src="/images/hero.webp" alt="cover"
         className="absolute inset-0 h-full w-full select-none object-cover grayscale" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[44%]
         bg-[linear-gradient(180deg,rgba(28,20,12,.5)_0%,rgba(28,20,12,.26)_55%,rgba(28,20,12,0)_100%)]" />

@@ -44,7 +44,7 @@ export function WeddingDate({
         />
         <div className="bg-white px-3 pt-3 pb-5 shadow-[0_6px_18px_rgba(60,50,40,.14)]">
           <img
-            src="/images/date-photo.png"
+            src="/images/date-photo.webp"
             alt="date photo"
             className="block aspect-square w-full select-none bg-[#EDEAE7] object-cover"
           />

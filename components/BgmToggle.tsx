@@ -22,7 +22,7 @@ export function BgmToggle() {
 
   return (
     <div className="sticky top-0 z-40 flex h-0 justify-center">
-      <audio ref={audio} src="/bgm.mp3" loop preload="none" />
+      <audio ref={audio} src="/audio/bgm.mp3" loop preload="none" />
       <button
         onClick={toggle}
         aria-label="배경음악"

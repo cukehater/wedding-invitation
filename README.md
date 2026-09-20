@@ -39,7 +39,6 @@ origin/             원본 산출물 (참조용, 수정하지 않음)
 
 ## 남은 작업
 
-- `public/bgm.mp3` — 배경음악 파일 추가 필요. 없으면 토글 시 "배경음악을 재생할 수 없어요" 토스트만 뜬다.
 - `lib/data.ts` 의 `CONTACTS[].tel` — 현재 `010-0000-000X` placeholder. 실제 번호로 교체.
 - `lib/data.ts` 의 `ACCOUNT_SIDES` — 계좌번호가 실제 값인지 확인 필요.
 - `NEXT_PUBLIC_SITE_URL` — 배포 도메인으로 설정. 카카오톡 공유 시 OG 이미지가 절대경로여야 한다.

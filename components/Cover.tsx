@@ -3,8 +3,8 @@ export function Cover() {
     <section className="relative h-[calc(100svh/var(--card-zoom))] min-h-[560px] overflow-hidden bg-[#EFEAE4]">
       <img src="/images/hero.webp" alt="cover"
         className="absolute inset-0 h-full w-full select-none object-cover grayscale" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[44%]
-        bg-[linear-gradient(180deg,rgba(28,20,12,.5)_0%,rgba(28,20,12,.26)_55%,rgba(28,20,12,0)_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[58%]
+        bg-[linear-gradient(180deg,rgba(28,20,12,.62)_0%,rgba(28,20,12,.46)_34%,rgba(28,20,12,.2)_70%,rgba(28,20,12,0)_100%)]" />
       <div className="pointer-events-none absolute inset-0 px-6 pt-[26px]">
         <div className="flex animate-[wfade_1.4s_ease_both] items-start justify-between
           font-heading text-[14px] font-medium leading-[1.05] tracking-[-.045em] text-[#FF9A42]">

@@ -34,7 +34,8 @@ export default function Home() {
         {/* s3 · 초대 인사말 */}
         <section ref={reveal} className="relative flex justify-center px-7 pt-[52px] pb-2">
           <img src="/images/heart.webp" alt=""
-            className="pointer-events-none absolute top-2 right-[14px] z-2 w-[104px] select-none opacity-90 mix-blend-multiply" />
+            className="pointer-events-none absolute top-2 right-[14px] z-2 w-[104px] select-none opacity-90 mix-blend-multiply
+              animate-[wheart_1.6s_steps(1,end)_infinite]" />
           <img src="/images/sticker-clip.webp" alt=""
             className="pointer-events-none absolute bottom-[6px] left-[18px] z-2 w-[52px] -rotate-12 select-none" />
           <img src="/images/greeting.webp" alt="초대 인사말" className="block h-auto w-full select-none" />

@@ -46,10 +46,30 @@
   a:hover {
     color: #b96878;
   }
+  /* 청첩장은 읽기 전용 카드다. 텍스트 드래그 선택과 이미지 저장 제스처를 막는다. */
+  body {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    /* iOS Safari 는 viewport 의 user-scalable=no 를 무시한다. pan-y 로 세로 스크롤만 남기고
+       핀치 줌과 더블탭 줌을 막는다. 가로 스와이프 UI 가 없어서 안전하다. */
+    touch-action: pan-y;
+  }
+  img {
+    /* ponytail: -webkit-user-drag 로 Chrome/Safari 커버. Firefox 는 img 마다 draggable="false" 가
+       필요한데 청첩장 트래픽은 사실상 모바일이라 생략. 데스크톱 FF 가 문제되면 그때 속성 추가. */
+    -webkit-user-drag: none;
+  }
   input,
   textarea,
   button {
     font-family: inherit;
+  }
+  /* 방명록 입력은 선택·편집 가능해야 한다. */
+  input,
+  textarea {
+    user-select: text;
+    -webkit-user-select: text;
   }
   ::selection {
     background: #f7dde3;
@@ -105,5 +125,63 @@
   }
   to {
     transform: translateY(0);
+  }
+}
+/* 스톱모션: steps(1, end) 로 각 키프레임을 뚝 끊어 재생해 손으로 옮긴 종이 스티커처럼 보이게 한다.
+   보간이 들어가면 그냥 부드러운 흔들림이 되어버린다. */
+@keyframes wheart {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-5px) rotate(-3deg);
+  }
+  50% {
+    transform: translateX(4px) rotate(2.5deg);
+  }
+  75% {
+    transform: translateX(-2px) rotate(-1.5deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+/* 화살표는 날짜 쪽으로 밀었다 돌아온다. translateY(-50%) 는 원래 Tailwind 의
+   -translate-y-1/2 가 하던 수직 정렬인데, transform 애니메이션이 그 클래스를
+   덮어쓰므로 키프레임 안으로 가져왔다. */
+@keyframes warrow {
+  0%,
+  100% {
+    transform: translate(0, -50%);
+  }
+  50% {
+    transform: translate(7px, -50%);
+  }
+}
+@keyframes wday {
+  0%,
+  100% {
+    transform: scale(1);
+    color: #c6362f;
+  }
+  50% {
+    transform: scale(1.16);
+    color: #e2483f;
+  }
+}
+@keyframes wspin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* 전정기관 장애가 있는 사용자를 위해 무한 반복 모션만 끈다.
+   진입 애니메이션(wfade/wslide/wcredit)은 1회성이라 대상이 아니다. */
+@media (prefers-reduced-motion: reduce) {
+  [class*="wheart"],
+  [class*="warrow"],
+  [class*="wday"],
+  [class*="wspin"],
+  [class*="wpulse"] {
+    animation: none !important;
   }
 }

@@ -71,12 +71,14 @@ export function WeddingDate({
                 <span
                   key={ci}
                   className="relative flex h-[26px] w-[26px] items-center justify-center
-                  font-serif-display text-[16px] font-semibold text-[#C6362F]"
+                  font-serif-display text-[16px] font-semibold text-[#C6362F]
+                  animate-[wday_1.8s_ease-in-out_infinite]"
                 >
                   <img
                     src="/images/arrow-mark.webp"
                     alt=""
-                    className="pointer-events-none absolute top-[35%] right-full w-[33px] -translate-y-1/2 select-none"
+                    className="pointer-events-none absolute top-[35%] right-full w-[33px] select-none
+                      animate-[warrow_1.8s_ease-in-out_infinite]"
                   />
                   29
                   <span

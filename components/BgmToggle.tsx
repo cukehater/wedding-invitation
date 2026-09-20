@@ -4,7 +4,7 @@ import { armAutoplay } from "@/lib/autoplay";
 import { useToast } from "./Toast";
 
 // 앞 3초는 인트로라 건너뛴다. 반복 재생도 매번 여기서 시작한다.
-const START_AT = 3.7;
+const START_AT = 3.6;
 
 export function BgmToggle() {
   const [on, setOn] = useState(false);

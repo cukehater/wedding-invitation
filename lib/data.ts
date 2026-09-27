@@ -36,10 +36,15 @@ export const ACCOUNT_SIDES = [
 ];
 
 export const TRAFFIC_WAYS = [
-  { title: "지하철", body: "4호선 평촌역 3번 출구\n횡단보도 맞은편" },
-  { title: "버스", body: "평촌역 하차\n일반 1, 6, 22, 52, 52-1, 83\n마을 2-1, 5, 5-1, 5-5, 6, 6-1, 7, 8, 10-1" },
-  { title: "자가용", body: "내비게이션에 '더파티움 안양' 또는\n'시민대로 311' 입력" },
-  { title: "주차", body: "제1주차장 · 더파티움 안양 본건물 지하주차장\n동안구 시민대로 311 (관양동 1746)\n\n제2주차장 · 지아이에스(구. 네온테크) 주차장\n동안구 부림로 146 (관양동 1745-3)\n토·일 이용 가능 (공휴일 이용 불가)\n\n제3주차장 · 이마트 평촌점 주차장\n동안구 시민대로 300 (관양동 1608)\n\n제4주차장 · 평촌 칼라힐 주차빌딩 (하이파킹 주차타워)\n동안구 시민대로 312 (평촌동 897)\n2층부터 주차 가능" },
+  { title: "지하철 이용 시", body: "4호선 '평촌역' 3번 출구 횡단보도 맞은편" },
+  {
+    title: "버스 이용 시",
+    body: "'평촌역' 하차\n[일반버스] 1, 6, 22, 52, 52-1, 83\n[마을버스] 2-1, 5, 5-1, 5-5, 6, 6-1, 7, 8, 10-1",
+  },
+  {
+    title: "자가용 이용 시",
+    body: "네비게이션 검색 - '더파티움 안양' 또는 '시민대로 311' 입력\n\n[제1주차장] 더파티움 안양 본건물 지하주차장\n동안구 시민대로 311\n\n[제2주차장] 지아이에스(구. 네온테크) 주차장\n동안구 부림로 146 · 토·일 이용가능 (공휴일 이용불가)\n\n[제3주차장] 이마트 평촌점 주차장\n동안구 시민대로 300\n\n[제4주차장] 평촌 칼라힐 주차빌딩 (2층부터 주차가능)\n동안구 시민대로 312",
+  },
 ];
 
 export const INFO_TEXTS = [
@@ -63,9 +68,21 @@ export const GALLERY = Array.from({ length: 10 }, (_, i) => {
   return { src: `/images/gallery/g${n}.webp`, alt: `갤러리 사진 ${n}` };
 });
 
-// 셋 다 앱 미설치 시 웹으로 폴백되는 링크. 티맵만 커스텀 스킴(앱 전용).
-export const MAP_APPS = [
+// 티맵 경로안내 스킴은 iOS 와 Android 의 파라미터 이름이 다르다 (rGoName/rGoX/rGoY vs goalname/goalx/goaly).
+// Universal Link 은 SK 가 지원하지 않아서 앱 미설치 시 iOS Safari 의 "주소가 유효하지 않습니다" 알럿은 못 막는다.
+// 알럿을 닫으면 Location 의 타이머 폴백이 스토어로 보낸다.
+const TMAP_GOAL = encodeURIComponent(VENUE.query);
+export const TMAP = {
+  ios: `tmap://route?rGoName=${TMAP_GOAL}&rGoX=${VENUE.lng}&rGoY=${VENUE.lat}`,
+  android: `tmap://route?goalname=${TMAP_GOAL}&goalx=${VENUE.lng}&goaly=${VENUE.lat}`,
+  iosStore: "https://apps.apple.com/kr/app/id431589174",
+  androidStore: "https://play.google.com/store/apps/details?id=com.skt.tmap.ku",
+};
+
+// 네이버·카카오는 앱 미설치 시 웹으로 폴백된다. 티맵만 scheme 플래그로 표시하고
+// Location 에서 플랫폼 분기 + 스토어 폴백을 붙인다.
+export const MAP_APPS: { name: string; logo: string; href: string; scheme?: boolean }[] = [
   { name: "네이버지도", logo: "/images/naver_map.webp", href: `https://map.naver.com/p/search/${encodeURIComponent(VENUE.query)}` },
-  { name: "티맵", logo: "/images/tmap.svg", href: `tmap://route?goalname=${encodeURIComponent(VENUE.query)}&goalx=${VENUE.lng}&goaly=${VENUE.lat}` },
+  { name: "티맵", logo: "/images/tmap.svg", href: TMAP.android, scheme: true },
   { name: "카카오맵", logo: "/images/kakao_map.webp", href: `https://map.kakao.com/link/to/${encodeURIComponent(VENUE.query)},${VENUE.lat},${VENUE.lng}` },
 ];

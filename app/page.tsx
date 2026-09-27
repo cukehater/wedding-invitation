@@ -37,7 +37,7 @@ export default function Home() {
         {/* s3 · 초대 인사말 */}
         <section
           ref={reveal}
-          className="relative flex justify-center px-7 pt-[52px] pb-2"
+          className="relative flex justify-center px-7 py-10"
         >
           <img
             src="/images/heart.webp"
@@ -51,7 +51,7 @@ export default function Home() {
             className="pointer-events-none absolute bottom-[6px] left-[18px] z-2 w-[52px] -rotate-12 select-none"
           />
           <img
-            src="/images/greeting.webp"
+            src="/images/letter.webp"
             alt="초대 인사말"
             className="block h-auto w-full select-none"
           />

@@ -17,11 +17,12 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
     const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
     if (!wrap || cards.length !== count) return;
 
-    let order = cards.map((_, i) => i);
-    orderRef.current = order;
+    orderRef.current = cards.map((_, i) => i);
 
+    // order 는 orderRef.current 하나만 본다. 지역 변수로 복사해두면 bringToFront 가
+    // 바깥에서 바꾼 순서를 layout 이 못 보고 되돌려버린다.
     const layout = (animate: boolean) => {
-      order.forEach((ci, pos) => {
+      orderRef.current.forEach((ci, pos) => {
         const c = cards[ci];
         c.style.transition = animate ? SPRING : "none";
         c.style.zIndex = String(100 - pos);
@@ -39,7 +40,6 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
           ? "0 20px 44px rgba(60,45,40,.24), 0 2px 8px rgba(60,45,40,.12)"
           : "0 10px 26px rgba(60,45,40,.14)";
       });
-      orderRef.current = order;
     };
     layout(false);
     layoutRef.current = layout;
@@ -51,7 +51,7 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
     } | null = null;
 
     const down = (e: PointerEvent) => {
-      const top = cards[order[0]];
+      const top = cards[orderRef.current[0]];
       if (!top || !top.contains(e.target as Node)) return;
       drag = { id: e.pointerId, x: e.clientX, y: e.clientY, dx: 0, dy: 0, card: top, t: Date.now(), axis: null };
       top.style.transition = "none";
@@ -93,7 +93,11 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
           `translate3d(${dir * (wrap.clientWidth + 260)}px,${d.dy * 0.32 + 60}px,0) rotate(${dir * 24}deg)`;
         d.card.style.opacity = "0";
         clearTimeout(cycleTimer);
-        cycleTimer = setTimeout(() => { order.push(order.shift()!); layout(true); }, 300);
+        cycleTimer = setTimeout(() => {
+          const o = orderRef.current;
+          o.push(o.shift()!);
+          layout(true);
+        }, 300);
         return;
       }
       layout(true);
@@ -114,10 +118,10 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
 
   // 라이트박스를 닫을 때 마지막으로 본 카드를 맨 위로 되돌린다 (원본 stackTo).
   const bringToFront = useCallback((i: number) => {
-    const order = orderRef.current;
-    const pos = order.indexOf(i);
-    if (pos < 0) return;
-    orderRef.current = order.slice(pos).concat(order.slice(0, pos));
+    const o = orderRef.current;
+    const pos = o.indexOf(i);
+    if (pos <= 0) return;
+    o.unshift(...o.splice(pos));
     layoutRef.current(false);
   }, []);
 

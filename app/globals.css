@@ -72,6 +72,24 @@
   textarea {
     user-select: text;
     -webkit-user-select: text;
+    appearance: none;
+    -webkit-appearance: none;
+    /* iOS Safari 기본 라운드와 inset shadow 제거 */
+    border-radius: 0;
+    background-color: transparent;
+  }
+  /* 자동완성 노란/파란 배경. background-color 는 덮을 수 없어 배경을 텍스트에만 클립하고
+     transition 을 사실상 무한대로 늘려 초기색이 유지되게 한다. Chrome/Edge/Safari 공통. */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #3a3330;
+    transition: background-color 9999s ease-in-out 0s;
+  }
+  input:autofill {
+    background-color: transparent;
+    color: #3a3330;
   }
   ::selection {
     background: #f7dde3;
@@ -157,7 +175,7 @@
     transform: translate(0, -50%);
   }
   50% {
-    transform: translate(7px, -50%);
+    transform: translate(4px, -50%);
   }
 }
 @keyframes wday {
@@ -167,8 +185,8 @@
     color: #c6362f;
   }
   50% {
-    transform: scale(1.16);
-    color: #e2483f;
+    transform: scale(1.07);
+    color: #d2413a;
   }
 }
 @keyframes wspin {

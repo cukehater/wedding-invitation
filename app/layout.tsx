@@ -41,8 +41,8 @@ const plexKr = IBM_Plex_Sans_KR({
   variable: "--font-plexkr",
 });
 
-// TODO: 배포 후 NEXT_PUBLIC_SITE_URL 을 실제 도메인으로 설정 (카카오톡 공유 OG 이미지 절대경로용)
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+// OG 이미지는 절대경로여야 카카오톡 미리보기가 뜬다. 커스텀 도메인을 붙이면 NEXT_PUBLIC_SITE_URL 로 덮어쓴다.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ks-sm-wedding-invitation.vercel.app";
 
 const TITLE = "경식♥수민 결혼식에 초대합니다.";
 const DESCRIPTION =

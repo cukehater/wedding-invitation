@@ -3,6 +3,8 @@
 Claude Design 산출물(`origin/`)을 Next.js 앱으로 이식한 결과물.
 2026년 11월 29일 일요일 오후 4시 20분 · 더파티움 안양 7F 라포레홀
 
+https://ks-sm-wedding-invitation.vercel.app/
+
 ## 개발
 
 ```bash
@@ -44,6 +46,6 @@ origin/             원본 산출물 (참조용, 수정하지 않음)
 
 - `lib/data.ts` 의 `CONTACTS[].tel` — 현재 `010-0000-000X` placeholder. 실제 번호로 교체.
 - `lib/data.ts` 의 `ACCOUNT_SIDES` — 계좌번호가 실제 값인지 확인 필요.
-- `NEXT_PUBLIC_SITE_URL` — 배포 도메인으로 설정. 카카오톡 공유 시 OG 이미지가 절대경로여야 한다.
+- `NEXT_PUBLIC_SITE_URL` — 기본값이 위 배포 주소다. 커스텀 도메인을 붙일 때만 설정한다.
 - 방명록 백엔드 연동 — 현재 메모리 더미라 새로고침하면 초기화되고, 비밀번호는 입력만 받고 검증하지 않는다.
 - 카카오톡 공유 SDK — 원본에도 미구현 (`shares` 배열만 있고 UI 없음).

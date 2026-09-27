@@ -17,28 +17,44 @@ export default function Home() {
   return (
     <div className="flex min-h-screen justify-center bg-[#EDEAE6]">
       <BgmToggle />
-      <div style={{ zoom: "var(--card-zoom)" }}
+      <div
+        style={{ zoom: "var(--card-zoom)" }}
         className="relative w-full max-w-[430px] overflow-hidden bg-white
         bg-[url('/images/bg-tile.webp')] bg-[length:430px_auto] bg-top bg-repeat
-        font-body text-[#5E5E5E] shadow-[0_0_60px_rgba(60,50,52,.14)]">
-
+        font-body text-[#5E5E5E] shadow-[0_0_60px_rgba(60,50,52,.14)]"
+      >
         <Cover />
 
         {/* s2 · MAIN PHOTO */}
         <section ref={reveal} className="pt-10">
-          <img src="/images/main-photo.webp"
+          <img
+            src="/images/main-photo.webp"
             alt="김홍창·박귀자의 아들 김경식, 윤경애의 딸 김수민"
-            className="block h-auto w-full select-none" />
+            className="block h-auto w-full select-none"
+          />
         </section>
 
         {/* s3 · 초대 인사말 */}
-        <section ref={reveal} className="relative flex justify-center px-7 pt-[52px] pb-2">
-          <img src="/images/heart.webp" alt=""
+        <section
+          ref={reveal}
+          className="relative flex justify-center px-7 pt-[52px] pb-2"
+        >
+          <img
+            src="/images/heart.webp"
+            alt=""
             className="pointer-events-none absolute top-2 right-[14px] z-2 w-[104px] select-none opacity-90 mix-blend-multiply
-              animate-[wheart_1.6s_steps(1,end)_infinite]" />
-          <img src="/images/sticker-clip.webp" alt=""
-            className="pointer-events-none absolute bottom-[6px] left-[18px] z-2 w-[52px] -rotate-12 select-none" />
-          <img src="/images/greeting.webp" alt="초대 인사말" className="block h-auto w-full select-none" />
+              animate-[wheart_1.6s_steps(1,end)_infinite]"
+          />
+          <img
+            src="/images/sticker-clip.webp"
+            alt=""
+            className="pointer-events-none absolute bottom-[6px] left-[18px] z-2 w-[52px] -rotate-12 select-none"
+          />
+          <img
+            src="/images/greeting.webp"
+            alt="초대 인사말"
+            className="block h-auto w-full select-none"
+          />
         </section>
 
         <WeddingDate revealRef={reveal} />

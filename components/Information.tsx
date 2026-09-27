@@ -18,15 +18,15 @@ export function Information({ revealRef }: { revealRef: RevealRef }) {
     return () => clearTimeout(id);
   }, [i]);
 
-  // 탭과 스와이프를 pointerup 한 곳에서 처리한다. onClick 을 따로 두면 스와이프가 끝날 때
-  // 클릭까지 발생해 두 칸씩 넘어간다.
+  // 전환은 좌우 스와이프만으로 한다. 탭은 아무것도 하지 않는다.
   const downX = useRef(0);
   const onDown = (e: React.PointerEvent) => {
     downX.current = e.clientX;
   };
   const onUp = (e: React.PointerEvent) => {
     const dx = e.clientX - downX.current;
-    step(Math.abs(dx) < 40 ? 1 : dx < 0 ? 1 : -1);
+    if (Math.abs(dx) < 40) return;
+    step(dx < 0 ? 1 : -1);
   };
 
   return (
@@ -36,7 +36,7 @@ export function Information({ revealRef }: { revealRef: RevealRef }) {
         onPointerDown={onDown}
         onPointerUp={onUp}
         style={{ WebkitMaskImage: MASK, maskImage: MASK }}
-        className="mx-auto aspect-1700/600 w-[85%] cursor-pointer touch-pan-y overflow-hidden bg-[#F1EAE6]"
+        className="mx-auto aspect-1700/600 w-[85%] cursor-grab touch-pan-y overflow-hidden bg-[#F1EAE6]"
       >
         <img loading="lazy" decoding="async"
           src="/images/info.webp"

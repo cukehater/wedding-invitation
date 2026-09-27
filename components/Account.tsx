@@ -4,18 +4,40 @@ import { SectionHeading } from "./SectionHeading";
 import { ACCOUNT_SIDES } from "@/lib/data";
 import { useToast } from "./Toast";
 
+// ponytail: navigator.clipboard 는 보안 컨텍스트(https/localhost)에만 존재한다. 폰에서 LAN dev(http) 로
+// 열거나 클립보드를 막는 인앱 웹뷰에서는 deprecated 지만 여전히 동작하는 execCommand 로 떨어진다.
+const legacyCopy = (text: string) => {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  ta.setAttribute("readonly", "");
+  // globals.css 의 body { user-select: none } 때문에 WebKit 에서 선택이 안 된다. 여기서만 되돌린다.
+  ta.style.cssText =
+    "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;user-select:text;-webkit-user-select:text";
+  document.body.appendChild(ta);
+  ta.select();
+  ta.setSelectionRange(0, text.length); // iOS 는 select() 만으로 범위가 안 잡힌다
+  const ok = document.execCommand("copy");
+  ta.remove();
+  return ok;
+};
+
 export function Account({ revealRef }: { revealRef: (n: HTMLElement | null) => void }) {
   // 원본의 s.acct 와 동일하게 한 번에 한쪽만 열린다.
   const [open, setOpen] = useState<string | null>(null);
   const say = useToast();
 
   const copy = async (text: string, who: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      say(`${who} 계좌번호가 복사되었어요`);
-    } catch {
-      say("복사에 실패했어요. 길게 눌러 직접 복사해 주세요");
+    let ok = false;
+    // writeText 가 없으면 await 없이 바로 폴백한다. iOS 는 await 후 유저 제스처가 끊겨
+    // execCommand 가 실패할 수 있다.
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        ok = true;
+      } catch {}
     }
+    if (!ok) ok = legacyCopy(text);
+    say(ok ? `${who} 계좌번호가 복사되었어요` : "복사에 실패했어요. 길게 눌러 직접 복사해 주세요");
   };
 
   return (

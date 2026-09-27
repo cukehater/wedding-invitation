@@ -42,9 +42,11 @@ const plexKr = IBM_Plex_Sans_KR({
 });
 
 // OG 이미지는 절대경로여야 카카오톡 미리보기가 뜬다. 커스텀 도메인을 붙이면 NEXT_PUBLIC_SITE_URL 로 덮어쓴다.
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ks-sm-wedding-invitation.vercel.app";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  "https://ks-sm-wedding-invitation.vercel.app";
 
-const TITLE = "경식♥수민 결혼식에 초대합니다.";
+const TITLE = "경식♡수민 결혼식에 초대합니다.";
 const DESCRIPTION =
   "2026년 11월 29일 일요일 오후 4시 20분 · 더파티움 안양 7F 라포레홀";
 

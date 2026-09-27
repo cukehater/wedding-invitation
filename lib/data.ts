@@ -6,13 +6,12 @@ export const VENUE = {
   lng: 126.97005,
 } as const;
 
-// TODO: 실제 전화번호로 교체 필요 (원본 산출물에 번호 없음)
 export const CONTACTS = [
-  { role: "신랑", name: "김경식", tel: "010-0000-0001" },
-  { role: "신랑 아버지", name: "김홍창", tel: "010-0000-0002" },
-  { role: "신랑 어머니", name: "박귀자", tel: "010-0000-0003" },
-  { role: "신부", name: "김수민", tel: "010-0000-0004" },
-  { role: "신부 어머니", name: "윤경애", tel: "010-0000-0005" },
+  { role: "신랑", name: "김경식", tel: "010-5141-8101" },
+  { role: "신랑 아버지", name: "김홍창", tel: "010-3442-8101" },
+  { role: "신랑 어머니", name: "박귀자", tel: "010-8460-5500" },
+  { role: "신부", name: "김수민", tel: "010-9553-7589" },
+  { role: "신부 어머니", name: "윤경애", tel: "010-6342-7589" },
 ];
 
 export const ACCOUNT_SIDES = [
@@ -20,30 +19,59 @@ export const ACCOUNT_SIDES = [
     key: "groom",
     title: "신랑 측 계좌번호",
     rows: [
-      { role: "신랑", name: "김경식", acct: "카카오뱅크 3333-01-1234567" },
-      { role: "아버지", name: "김홍창", acct: "국민 123-45-6789-012" },
-      { role: "어머니", name: "박귀자", acct: "농협 302-1234-5678-01" },
+      { role: "신랑", name: "김경식", acct: "국민 757102-04-385539" },
+      { role: "아버지", name: "김홍창", acct: "농협 204010-52-126373" },
+      { role: "어머니", name: "박귀자", acct: "새마을 0931-1000-0328-4" },
     ],
   },
   {
     key: "bride",
     title: "신부 측 계좌번호",
     rows: [
-      { role: "신부", name: "김수민", acct: "토스뱅크 1000-1234-5678" },
-      { role: "어머니", name: "윤경애", acct: "신한 110-123-456789" },
+      { role: "신부", name: "김수민", acct: "국민 457002-01-304424" },
+      { role: "어머니", name: "윤경애", acct: "국민 457001-01-370572" },
     ],
   },
 ];
 
-export const TRAFFIC_WAYS = [
-  { title: "지하철 이용 시", body: "4호선 '평촌역' 3번 출구 횡단보도 맞은편" },
+// 색은 실제 노선·수단 색. 4호선 #00A5DE, 서울 지선버스 #53B332, 자가용은 기존 accent.
+type TrafficWay = {
+  label: string;
+  title: string;
+  color: string;
+  lead: string;
+  rows?: { k: string; v: string }[];
+  lots?: { name: string; addr: string; note?: string }[];
+};
+
+export const TRAFFIC_WAYS: TrafficWay[] = [
   {
-    title: "버스 이용 시",
-    body: "'평촌역' 하차\n[일반버스] 1, 6, 22, 52, 52-1, 83\n[마을버스] 2-1, 5, 5-1, 5-5, 6, 6-1, 7, 8, 10-1",
+    label: "SUBWAY",
+    title: "지하철",
+    color: "#00A5DE",
+    lead: "4호선 '평촌역' 3번 출구 횡단보도 맞은편",
   },
   {
-    title: "자가용 이용 시",
-    body: "네비게이션 검색 - '더파티움 안양' 또는 '시민대로 311' 입력\n\n[제1주차장] 더파티움 안양 본건물 지하주차장\n동안구 시민대로 311\n\n[제2주차장] 지아이에스(구. 네온테크) 주차장\n동안구 부림로 146 · 토·일 이용가능 (공휴일 이용불가)\n\n[제3주차장] 이마트 평촌점 주차장\n동안구 시민대로 300\n\n[제4주차장] 평촌 칼라힐 주차빌딩 (2층부터 주차가능)\n동안구 시민대로 312",
+    label: "BUS",
+    title: "버스",
+    color: "#53B332",
+    lead: "'평촌역' 하차",
+    rows: [
+      { k: "일반", v: "1, 6, 22, 52, 52-1, 83" },
+      { k: "마을", v: "2-1, 5, 5-1, 5-5, 6, 6-1, 7, 8, 10-1" },
+    ],
+  },
+  {
+    label: "CAR",
+    title: "자가용",
+    color: "#FF9A42",
+    lead: "네비게이션에 '더파티움 안양' 또는 '시민대로 311' 입력",
+    lots: [
+      { name: "더파티움 안양 본건물 지하주차장", addr: "동안구 시민대로 311" },
+      { name: "지아이에스(구. 네온테크) 주차장", addr: "동안구 부림로 146", note: "토·일 가능 (공휴일 불가)" },
+      { name: "이마트 평촌점 주차장", addr: "동안구 시민대로 300" },
+      { name: "평촌 칼라힐 주차빌딩", addr: "동안구 시민대로 312", note: "2층부터 주차 가능" },
+    ],
   },
 ];
 
@@ -81,8 +109,21 @@ export const TMAP = {
 
 // 네이버·카카오는 앱 미설치 시 웹으로 폴백된다. 티맵만 scheme 플래그로 표시하고
 // Location 에서 플랫폼 분기 + 스토어 폴백을 붙인다.
-export const MAP_APPS: { name: string; logo: string; href: string; scheme?: boolean }[] = [
-  { name: "네이버지도", logo: "/images/naver_map.webp", href: `https://map.naver.com/p/search/${encodeURIComponent(VENUE.query)}` },
+export const MAP_APPS: {
+  name: string;
+  logo: string;
+  href: string;
+  scheme?: boolean;
+}[] = [
+  {
+    name: "네이버지도",
+    logo: "/images/naver_map.webp",
+    href: `https://map.naver.com/p/search/${encodeURIComponent(VENUE.query)}`,
+  },
   { name: "티맵", logo: "/images/tmap.svg", href: TMAP.android, scheme: true },
-  { name: "카카오맵", logo: "/images/kakao_map.webp", href: `https://map.kakao.com/link/to/${encodeURIComponent(VENUE.query)},${VENUE.lat},${VENUE.lng}` },
+  {
+    name: "카카오맵",
+    logo: "/images/kakao_map.webp",
+    href: `https://map.kakao.com/link/to/${encodeURIComponent(VENUE.query)},${VENUE.lat},${VENUE.lng}`,
+  },
 ];

@@ -64,20 +64,56 @@ export function Location({
         ))}
       </div>
 
-      <div className="mt-[22px] grid gap-5 overflow-hidden rounded-2xl border border-[#F1ECEC]
-        bg-[rgb(253,252,252)] px-[22px] py-6">
-        {TRAFFIC_WAYS.map((w, i) => (
-          <div key={w.title} className={i ? "border-t border-[#F1ECEC] pt-5" : undefined}>
-            <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-[99px] bg-[#FF9A42]" />
-              <span className="text-[13px] text-[#404040]">{w.title}</span>
+      <div className="mt-8 grid gap-7">
+        {TRAFFIC_WAYS.map((w) => (
+          // 색이 데이터에서 오므로 Tailwind 임의값 클래스로는 JIT 가 못 만든다.
+          <div key={w.label} style={{ borderColor: w.color }} className="border-l pl-4">
+            <div className="flex items-baseline gap-2">
+              <span
+                style={{ color: w.color }}
+                className="font-heading text-[10px] font-semibold tracking-[.16em]"
+              >
+                {w.label}
+              </span>
+              <span className="text-[11.5px] text-[#B0A8A2]">{w.title}</span>
             </div>
-            <div className="mt-2 text-[12.5px] leading-[1.95] whitespace-pre-line text-[#5E5E5E]">
-              {w.body}
-            </div>
+
+            <p className="mt-2.5 mb-0 text-[12.5px] leading-[1.85] text-[#4A4A4A]">{w.lead}</p>
+
+            {w.rows && (
+              <div className="mt-2.5 grid gap-1.5">
+                {w.rows.map((r) => (
+                  <div key={r.k} className="flex gap-3 text-[12.5px] leading-[1.6]">
+                    <span className="w-7 shrink-0 text-[#B0A8A2]">{r.k}</span>
+                    <span className="text-[#5E5E5E]">{r.v}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {w.lots && (
+              <ol className="mt-3.5 grid list-none gap-3 p-0">
+                {w.lots.map((l, i) => (
+                  <li key={l.name} className="flex gap-2.5">
+                    <span className="mt-[2px] flex h-[17px] w-[17px] shrink-0 items-center justify-center
+                      rounded-[99px] bg-[#F1ECE7] font-heading text-[9.5px] font-semibold text-[#8A8079]">
+                      {i + 1}
+                    </span>
+                    <span className="grid gap-[3px]">
+                      <span className="text-[12.5px] leading-[1.45] text-[#4A4A4A]">{l.name}</span>
+                      <span className="text-[11.5px] leading-[1.45] text-[#B0A8A2]">
+                        {l.addr}
+                        {l.note && <span className="text-[#C2856A]"> · {l.note}</span>}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            )}
           </div>
         ))}
       </div>
+
     </section>
   );
 }

@@ -189,6 +189,43 @@
     color: #d2413a;
   }
 }
+/* wheart 와 같은 스톱모션 원리. 기울기를 모든 키프레임에 넣어 멈춰 있을 때도 비스듬하다
+   (transform 애니메이션이 -rotate-* 클래스를 덮어쓰기 때문에 클래스로는 못 준다). */
+@keyframes wsticker {
+  0% {
+    transform: rotate(-8deg) translateX(0);
+  }
+  25% {
+    transform: rotate(-11deg) translateX(3px);
+  }
+  50% {
+    transform: rotate(-6deg) translateX(-2px);
+  }
+  75% {
+    transform: rotate(-9.5deg) translateX(1px);
+  }
+  100% {
+    transform: rotate(-8deg) translateX(0);
+  }
+}
+/* wsticker 의 오른쪽 기울기 버전. WeddingDate 스티커는 원래 rotate-14 로 반대로 기울어 있다. */
+@keyframes wsticker-r {
+  0% {
+    transform: rotate(14deg) translateX(0);
+  }
+  25% {
+    transform: rotate(17deg) translateX(-3px);
+  }
+  50% {
+    transform: rotate(12deg) translateX(2px);
+  }
+  75% {
+    transform: rotate(15.5deg) translateX(-1px);
+  }
+  100% {
+    transform: rotate(14deg) translateX(0);
+  }
+}
 @keyframes wspin {
   to {
     transform: rotate(360deg);
@@ -198,6 +235,7 @@
    진입 애니메이션(wfade/wslide/wcredit)은 1회성이라 대상이 아니다. */
 @media (prefers-reduced-motion: reduce) {
   [class*="wheart"],
+  [class*="wsticker"],
   [class*="warrow"],
   [class*="wday"],
   [class*="wspin"],

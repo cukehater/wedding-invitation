@@ -55,7 +55,9 @@ export function WeddingDate({
         <img
           src="/images/sticker-clip.webp"
           alt=""
-          className="pointer-events-none absolute -right-4 -bottom-[14px] w-12 rotate-14 select-none"
+          // 기울기는 wsticker-r 키프레임에 들어 있다 (transform 애니메이션이 rotate-* 클래스를 덮어씀).
+          className="pointer-events-none absolute -right-4 -bottom-[14px] w-12 select-none
+            animate-[wsticker-r_2.5s_steps(1,end)_infinite]"
         />
       </div>
 

@@ -26,7 +26,14 @@ export default function Home() {
         <Cover />
 
         {/* s2 · MAIN PHOTO */}
-        <section ref={reveal} className="pt-10">
+        <section ref={reveal} className="relative pt-10">
+          <img
+            src="/images/double-heart.webp"
+            alt=""
+            // 가운데 정렬은 mx-auto 로. -translate-x-1/2 는 wsticker 의 transform 에 덮어써진다.
+            className="pointer-events-none absolute inset-x-0 top-[16%] z-2 mx-auto w-[78px] select-none
+              mix-blend-multiply animate-[wsticker_1.9s_steps(1,end)_infinite]"
+          />
           <img
             src="/images/main-photo.webp"
             alt="김홍창·박귀자의 아들 김경식, 윤경애의 딸 김수민"
@@ -48,7 +55,10 @@ export default function Home() {
           <img
             src="/images/sticker-clip.webp"
             alt=""
-            className="pointer-events-none absolute bottom-[6px] left-[18px] z-2 w-[52px] -rotate-12 select-none"
+            // 430px 디자인 기준 left/bottom 40px 를 섹션 대비 % 로 환산. 카드 폭이 줄어도 비율이 유지된다.
+            // 기울기는 wsticker 키프레임에 들어 있어 -rotate-* 클래스로는 못 준다 (transform 이 덮어써짐).
+            className="pointer-events-none absolute bottom-[10.9%] left-[9.3%] z-2 w-[52px] select-none
+              animate-[wsticker_2.2s_steps(1,end)_infinite]"
           />
           <img
             src="/images/letter.webp"

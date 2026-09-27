@@ -69,15 +69,3 @@ export const MAP_APPS = [
   { name: "티맵", logo: "/images/tmap.svg", href: `tmap://route?goalname=${encodeURIComponent(VENUE.query)}&goalx=${VENUE.lng}&goaly=${VENUE.lat}` },
   { name: "카카오맵", logo: "/images/kakao_map.webp", href: `https://map.kakao.com/link/to/${encodeURIComponent(VENUE.query)},${VENUE.lat},${VENUE.lng}` },
 ];
-
-export type Guest = { id: string; name: string; date: string; msg: string };
-
-// TODO(backlog): 실제 방명록 DB 연동. 지금은 더미 시드 + 메모리 상태.
-export const SEED_GUESTS: Guest[] = [
-  { id: "s1", name: "이서연", date: "2026.09.02", msg: "두 분 웃는 모습이 참 닮았어요! 늘 지금처럼 행복하게 지내요" },
-  { id: "s2", name: "박도현", date: "2026.08.28", msg: "경식아 축하한다! 그날 제일 크게 박수 쳐줄게" },
-  { id: "s3", name: "최하늘", date: "2026.08.25", msg: "수민이 신부 되는 날이라니 벅차네요. 예쁜 가정 이루길!" },
-  { id: "s4", name: "정민재", date: "2026.08.21", msg: "두 사람의 새로운 시작을 진심으로 축하합니다" },
-  { id: "s5", name: "한유진", date: "2026.08.19", msg: "11월 29일 꼭 갈게요! 행복만 가득하길 바라요" },
-  { id: "s6", name: "오세라", date: "2026.08.14", msg: "언제나 웃음 많은 부부로 지내세요, 축하해요!" },
-];

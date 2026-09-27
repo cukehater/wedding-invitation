@@ -8,7 +8,7 @@ Claude Design 산출물(`origin/`)을 Next.js 앱으로 이식한 결과물.
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm test        # 카운트다운 / 달력 단위 테스트
+npm test        # 카운트다운 / 달력 · 방명록 해싱·검증 단위 테스트
 npm run build   # 프로덕션 빌드
 ```
 
@@ -23,7 +23,10 @@ app/page.tsx        섹션 조립 (s2 메인사진 · s3 인사말은 여기 인
 components/         섹션별 컴포넌트 + 공용 SectionHeading / Accordion / Toast
 hooks/              useReveal (등장 애니메이션) · useSwipeStack (갤러리 카드 드래그)
 lib/data.ts         모든 콘텐츠 상수 (연락처 · 계좌 · 교통 · 크레딧 · 안내문구)
-lib/wedding.ts      countdownUnits() · calendarRows()  ← 유일한 테스트 대상
+lib/wedding.ts      countdownUnits() · calendarRows()
+lib/guestbook.ts    방명록 해싱 · 검증 · 날짜 로직
+lib/db.ts           Neon Postgres 클라이언트
+app/api/guestbook/  방명록 등록(POST) · 조회(GET) · 삭제(DELETE) API 라우트
 origin/             원본 산출물 (참조용, 수정하지 않음)
 ```
 

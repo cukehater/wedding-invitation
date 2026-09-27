@@ -29,7 +29,6 @@ export function Outro({ revealRef }: { revealRef: RevealRef }) {
       className="relative aspect-[1/1.75] min-h-140 overflow-hidden bg-[#221D1C]"
     >
       <img
-        loading="lazy"
         decoding="async"
         src="/images/outro.webp"
         alt=""

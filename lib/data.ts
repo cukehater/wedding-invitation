@@ -110,11 +110,20 @@ export const GALLERY = Array.from({ length: 10 }, (_, i) => {
 // Universal Link 은 SK 가 지원하지 않아서 앱 미설치 시 iOS Safari 의 "주소가 유효하지 않습니다" 알럿은 못 막는다.
 // 알럿을 닫으면 Location 의 타이머 폴백이 스토어로 보낸다.
 const TMAP_GOAL = encodeURIComponent(VENUE.query);
+const TMAP_ANDROID_STORE =
+  "https://play.google.com/store/apps/details?id=com.skt.tmap.ku";
+const TMAP_ANDROID_QUERY = `route?goalname=${TMAP_GOAL}&goalx=${VENUE.lng}&goaly=${VENUE.lat}`;
+
 export const TMAP = {
   ios: `tmap://route?rGoName=${TMAP_GOAL}&rGoX=${VENUE.lng}&rGoY=${VENUE.lat}`,
-  android: `tmap://route?goalname=${TMAP_GOAL}&goalx=${VENUE.lng}&goaly=${VENUE.lat}`,
+  android: `tmap://${TMAP_ANDROID_QUERY}`,
+  // 안드로이드는 intent:// 로 연다. 카카오톡 인앱 웹뷰는 커스텀 스킴을
+  // ERR_UNKNOWN_URL_SCHEME 으로 조용히 버리지만 intent:// 는 처리한다.
+  // 미설치 시 이동도 S.browser_fallback_url 이 맡아 타이머 휴리스틱이 필요 없다.
+  androidIntent:
+    `intent://${TMAP_ANDROID_QUERY}#Intent;scheme=tmap;package=com.skt.tmap.ku;` +
+    `S.browser_fallback_url=${encodeURIComponent(TMAP_ANDROID_STORE)};end`,
   iosStore: "https://apps.apple.com/kr/app/id431589174",
-  androidStore: "https://play.google.com/store/apps/details?id=com.skt.tmap.ku",
 };
 
 // 네이버·카카오는 앱 미설치 시 웹으로 폴백된다. 티맵만 scheme 플래그로 표시하고

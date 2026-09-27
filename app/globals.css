@@ -128,6 +128,9 @@
     transform: scaleY(1);
   }
 }
+.eq-bar {
+  animation: weq 0.9s ease-in-out infinite;
+}
 @keyframes wpulse {
   0%,
   100% {
@@ -216,7 +219,8 @@
   [class*="warrow"],
   [class*="wday"],
   [class*="wspin"],
-  [class*="wpulse"] {
+  [class*="wpulse"],
+  .eq-bar {
     animation: none !important;
   }
   /* 모션만 끄고 기울기는 남긴다. animation: none 만 주면 스티커가 똑바로 서버린다. */

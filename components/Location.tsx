@@ -3,19 +3,23 @@ import { SectionHeading } from "./SectionHeading";
 import { MAP_APPS, TMAP, TRAFFIC_WAYS, VENUE } from "@/lib/data";
 import type { RevealRef } from "@/hooks/useReveal";
 
-// ponytail: 커스텀 스킴이 실제로 열렸는지 알 방법이 없어 타이머 + visibility 휴리스틱.
-// 앱이 뜨면 문서가 hidden 되고 타이머가 취소된다. 안 뜨면 스토어로 보낸다.
 // iPadOS 13+ 는 UA 가 Mac 으로 잡히지만 청첩장 트래픽은 사실상 폰이라 무시한다.
 const openTmap = (e: React.MouseEvent<HTMLAnchorElement>) => {
   e.preventDefault();
-  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  if (!/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    // 안드로이드는 intent:// 가 앱 실행과 미설치 폴백을 둘 다 처리한다.
+    location.href = TMAP.androidIntent;
+    return;
+  }
+  // ponytail: iOS 는 티맵 Universal Link 이 없어 커스텀 스킴이 열렸는지 알 방법이 없다.
+  // 타이머 + visibility 휴리스틱 — 앱이 뜨면 문서가 hidden 되고 타이머가 취소된다.
   const timer = setTimeout(() => {
-    if (!document.hidden) location.href = ios ? TMAP.iosStore : TMAP.androidStore;
+    if (!document.hidden) location.href = TMAP.iosStore;
   }, 1500);
   document.addEventListener("visibilitychange", () => clearTimeout(timer), {
     once: true,
   });
-  location.href = ios ? TMAP.ios : TMAP.android;
+  location.href = TMAP.ios;
 };
 
 export function Location({ revealRef }: { revealRef: RevealRef }) {

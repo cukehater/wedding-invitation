@@ -44,16 +44,24 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
     layout(false);
     layoutRef.current = layout;
 
+    // 카드는 --card-zoom 으로 확대돼 있다(app/page.tsx). 포인터 좌표는 뷰포트 CSS px 인데
+    // transform 은 zoom 안에서 적용되므로, 나눠주지 않으면 카드가 손가락보다 그 배율만큼 빨리 간다.
+    // 배율은 500px 미디어 쿼리로 바뀌니 제스처마다 읽는다.
+    const cardZoom = () =>
+      parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue("--card-zoom"),
+      ) || 1;
+
     let cycleTimer: ReturnType<typeof setTimeout>;
     let drag: {
       id: number; x: number; y: number; dx: number; dy: number;
-      card: HTMLDivElement; t: number; axis: "x" | "y" | null;
+      card: HTMLDivElement; t: number; axis: "x" | "y" | null; zoom: number;
     } | null = null;
 
     const down = (e: PointerEvent) => {
       const top = cards[orderRef.current[0]];
       if (!top || !top.contains(e.target as Node)) return;
-      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, dx: 0, dy: 0, card: top, t: Date.now(), axis: null };
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, dx: 0, dy: 0, card: top, t: Date.now(), axis: null, zoom: cardZoom() };
       top.style.transition = "none";
       top.style.cursor = "grabbing";
       try { top.setPointerCapture(e.pointerId); } catch {}
@@ -61,8 +69,8 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
 
     const move = (e: PointerEvent) => {
       if (!drag || e.pointerId !== drag.id) return;
-      drag.dx = e.clientX - drag.x;
-      drag.dy = e.clientY - drag.y;
+      drag.dx = (e.clientX - drag.x) / drag.zoom;
+      drag.dy = (e.clientY - drag.y) / drag.zoom;
       if (!drag.axis && Math.abs(drag.dx) + Math.abs(drag.dy) > 8) {
         drag.axis = Math.abs(drag.dx) >= Math.abs(drag.dy) ? "x" : "y";
       }

@@ -12,18 +12,28 @@ export function BgmToggle() {
   const say = useToast();
 
   // 일시정지 후 다시 켤 때는 멈춘 지점에서 이어간다 — 그때만 되감지 않는다.
-  // preload="none" 이라 메타데이터 로드 전이면 이 값이 재생 시작 위치로 예약된다.
   const play = async () => {
     const el = audio.current;
     if (!el) return;
-    if (el.currentTime < START_AT) el.currentTime = START_AT;
+    const seek = () => {
+      if (el.currentTime < START_AT) el.currentTime = START_AT;
+    };
+    // iOS Safari 는 메타데이터가 도착하기 전의 currentTime 대입을 무시한다.
+    // preload="none" 이라 첫 재생 때는 항상 readyState 0 이므로 로드 직후로 미룬다.
+    // (preload="metadata" 로 바꿔봤지만 Chromium·WebKit 둘 다 6.7MB 를 통째로
+    //  첫 화면에서 받아버려서 되돌렸다. 재생 전까지는 한 바이트도 받지 않는 게 맞다.)
+    if (el.readyState === 0) {
+      el.addEventListener("loadedmetadata", seek, { once: true });
+    } else {
+      seek();
+    }
     await el.play();
     setOn(true);
   };
 
-  // 첫 제스처에 자동 재생. 실패해도 조용히 넘어간다 — 하객이 요청한 동작이 아니라
-  // 페이지가 알아서 시도한 것이므로 실패 토스트를 띄우면 소음이 된다.
-  useEffect(() => armAutoplay(window, () => void play().catch(() => {})), []);
+  // 제스처에 자동 재생. 거부되면 armAutoplay 가 다음 제스처에서 다시 시도한다.
+  // 실패 토스트는 띄우지 않는다 — 하객이 요청한 동작이 아니라 페이지가 알아서 시도한 것이다.
+  useEffect(() => armAutoplay(window, () => play()), []);
 
   const toggle = async () => {
     const el = audio.current;
@@ -70,10 +80,12 @@ export function BgmToggle() {
             {[0, 0.18, 0.36].map((delay) => (
               <span
                 key={delay}
-                className="w-0.5 origin-bottom rounded-[2px] bg-[#FFF7F3]"
+                // 인라인 animation 대신 .eq-bar 클래스 — prefers-reduced-motion 블록이
+                // 클래스 셀렉터로만 매칭해서 인라인으로 걸면 모션이 안 꺼진다.
+                className="eq-bar w-0.5 origin-bottom rounded-[2px] bg-[#FFF7F3]"
                 style={{
                   height: 13,
-                  animation: `weq .9s ease-in-out ${delay}s infinite`,
+                  animationDelay: `${delay}s`,
                   animationPlayState: on ? "running" : "paused",
                   opacity: on ? 1 : 0.45,
                 }}

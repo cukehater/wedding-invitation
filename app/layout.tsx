@@ -46,7 +46,7 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
   "https://ks-sm-wedding-invitation.vercel.app";
 
-const TITLE = "경식·수민 결혼식에 초대합니다.";
+const TITLE = "경식과 수민의 결혼식에 초대합니다.";
 const DESCRIPTION =
   "2026년 11월 29일 일요일 오후 4시 20분 · 더파티움 안양 7F 라포레홀";
 
@@ -82,6 +82,9 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  // 삼성 인터넷의 "웹페이지 어두운 모드"와 Chrome auto-dark 가 흰 카드와 사진 색을 반전시킨다.
+  // 라이트 전용임을 명시해서 강제 반전을 끈다.
+  colorScheme: "light",
 };
 
 export default function RootLayout({

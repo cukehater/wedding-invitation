@@ -1,6 +1,5 @@
 import { SectionHeading } from "./SectionHeading";
 import { Accordion } from "./Accordion";
-import { KakaoMap } from "./KakaoMap";
 import { MAP_APPS, TRAFFIC_WAYS, VENUE } from "@/lib/data";
 
 export function Location({ revealRef }: { revealRef: (n: HTMLElement | null) => void }) {
@@ -14,7 +13,8 @@ export function Location({ revealRef }: { revealRef: (n: HTMLElement | null) => 
       </div>
 
       <div className="mx-auto mt-[22px] overflow-hidden rounded-[14px] bg-white">
-        <KakaoMap />
+        <img src="/images/map.webp" alt="더파티움 안양 약도"
+          className="block h-auto w-full select-none" />
       </div>
 
       <div className="mt-3 flex justify-center gap-2">

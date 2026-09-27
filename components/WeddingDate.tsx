@@ -73,6 +73,10 @@ export function WeddingDate({ revealRef }: { revealRef: RevealRef }) {
                   <img loading="lazy" decoding="async"
                     src="/images/arrow-mark.webp"
                     alt=""
+                    // 로드 전에도 박스를 예약한다. 높이가 0 이면 warrow 의 translateY(-50%) 도 0 이라
+                    // 이미지가 도착하는 순간(모바일에서는 스크롤 도중) 화살표가 16px 튄다.
+                    width={428}
+                    height={523}
                     className="pointer-events-none absolute top-[35%] right-full w-8.25 select-none
                       animate-[warrow_1.8s_ease-in-out_infinite]"
                   />

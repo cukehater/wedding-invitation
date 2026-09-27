@@ -1,6 +1,9 @@
 "use client";
 import { useCallback, useEffect, useRef } from "react";
 
+// useReveal() 이 돌려주는 ref 콜백의 타입. 8개 섹션 컴포넌트가 prop 으로 받는다.
+export type RevealRef = (node: HTMLElement | null) => void;
+
 const show = (n: HTMLElement) => {
   n.style.opacity = "";
   n.style.animation = "wfade .9s cubic-bezier(.22,.7,.25,1) both";
@@ -32,7 +35,7 @@ export function useReveal() {
     return () => { observer.disconnect(); clearTimeout(fallback); };
   }, []);
 
-  return useCallback((node: HTMLElement | null) => {
+  return useCallback<RevealRef>((node) => {
     if (node && !nodes.current.includes(node)) nodes.current.push(node);
   }, []);
 }

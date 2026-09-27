@@ -1,6 +1,7 @@
 "use client";
 import { SectionHeading } from "./SectionHeading";
 import { MAP_APPS, TMAP, TRAFFIC_WAYS, VENUE } from "@/lib/data";
+import type { RevealRef } from "@/hooks/useReveal";
 
 // ponytail: 커스텀 스킴이 실제로 열렸는지 알 방법이 없어 타이머 + visibility 휴리스틱.
 // 앱이 뜨면 문서가 hidden 되고 타이머가 취소된다. 안 뜨면 스토어로 보낸다.
@@ -17,11 +18,7 @@ const openTmap = (e: React.MouseEvent<HTMLAnchorElement>) => {
   location.href = ios ? TMAP.ios : TMAP.android;
 };
 
-export function Location({
-  revealRef,
-}: {
-  revealRef: (n: HTMLElement | null) => void;
-}) {
+export function Location({ revealRef }: { revealRef: RevealRef }) {
   return (
     <section ref={revealRef} className="px-5 pt-11 pb-14">
       <SectionHeading title="LOCATION" />
@@ -34,7 +31,7 @@ export function Location({
       </div>
 
       <div className="mx-auto overflow-hidden">
-        <img
+        <img loading="lazy" decoding="async"
           src="/images/map.webp"
           alt="더파티움 안양 약도"
           className="block w-full select-none object-cover aspect-[4/2.75]"
@@ -54,7 +51,7 @@ export function Location({
               border-[#EFE9EA] bg-white px-3.5 text-[12px] text-[#404040] shadow-[0_1px_4px_rgba(0,0,0,.04)]
               hover:border-[#E2D2D5]"
           >
-            <img
+            <img loading="lazy" decoding="async"
               src={m.logo}
               alt=""
               className="h-4 w-4 select-none rounded-[5px] object-contain"

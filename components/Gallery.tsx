@@ -1,21 +1,33 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SectionHeading } from "./SectionHeading";
 import { GALLERY } from "@/lib/data";
 import { useSwipeStack } from "@/hooks/useSwipeStack";
-
-const p2 = (n: number) => String(n).padStart(2, "0");
+import { p2 } from "@/lib/wedding";
+import type { RevealRef } from "@/hooks/useReveal";
 
 const ARROW = "absolute top-1/2 flex h-10 w-10 -translate-y-1/2 cursor-pointer appearance-none " +
   "items-center justify-center rounded-[99px] bg-white/15 backdrop-blur-[6px] text-[#FFF7F3] hover:bg-white/25";
 
-export function Gallery({ revealRef }: { revealRef: (n: HTMLElement | null) => void }) {
+export function Gallery({ revealRef }: { revealRef: RevealRef }) {
   const [box, setBox] = useState<number | null>(null);
   const { wrapRef, cardRefs, bringToFront } = useSwipeStack(GALLERY.length, setBox);
 
   const close = () => { if (box !== null) bringToFront(box); setBox(null); };
   const step = (delta: number) =>
     setBox((b) => (b === null ? b : (b + delta + GALLERY.length) % GALLERY.length));
+
+  // 라이트박스는 배경 클릭으로만 닫혔다. 키보드 사용자에게는 탈출 경로가 없다.
+  useEffect(() => {
+    if (box === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "ArrowRight") step(1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [box]);
 
   return (
     <>
@@ -29,7 +41,7 @@ export function Gallery({ revealRef }: { revealRef: (n: HTMLElement | null) => v
               className="absolute inset-0 cursor-grab touch-pan-y overflow-hidden rounded-md
                 bg-[#F1EAE6] select-none will-change-transform"
             >
-              <img src={g.src} alt={g.alt} draggable={false}
+              <img src={g.src} alt={g.alt} draggable={false} loading="lazy" decoding="async"
                 className="pointer-events-none block h-full w-full select-none object-cover" />
             </div>
           ))}
@@ -44,7 +56,7 @@ export function Gallery({ revealRef }: { revealRef: (n: HTMLElement | null) => v
         <div onClick={close}
           className="fixed inset-0 z-60 flex animate-[wfade_.25s_ease_both] cursor-zoom-out
             items-center justify-center bg-[rgba(30,25,24,.9)] p-6">
-          <img src={GALLERY[box].src} alt={GALLERY[box].alt}
+          <img src={GALLERY[box].src} alt={GALLERY[box].alt} decoding="async"
             className="max-h-[86vh] w-full max-w-[380px] select-none rounded-lg object-contain" />
           <button aria-label="이전 사진" onClick={(e) => { e.stopPropagation(); step(-1); }}
             className={`${ARROW} left-2.5`}>

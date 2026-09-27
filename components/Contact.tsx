@@ -1,10 +1,11 @@
 import { SectionHeading } from "./SectionHeading";
 import { CONTACTS } from "@/lib/data";
+import type { RevealRef } from "@/hooks/useReveal";
 
 // box-content: 원본 버튼이 all:unset 으로 content-box 라 border 가 크기에 더해진다.
 const PILL = "box-content cursor-pointer rounded-[99px] border px-3 py-1.5 text-[11px]";
 
-export function Contact({ revealRef }: { revealRef: (n: HTMLElement | null) => void }) {
+export function Contact({ revealRef }: { revealRef: RevealRef }) {
   return (
     <section ref={revealRef} className="px-7 pt-10">
       <SectionHeading title="CONTACT" />

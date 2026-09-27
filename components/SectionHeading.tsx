@@ -2,7 +2,7 @@ export function SectionHeading({ title }: { title: string }) {
   return (
     <>
       <div className="flex justify-center">
-        <img
+        <img loading="lazy" decoding="async"
           src="/images/glyph.webp"
           alt=""
           className="h-5 w-5 select-none animate-[wspin_9s_linear_infinite]"

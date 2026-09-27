@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { SectionHeading } from "./SectionHeading";
 import { calendarRows, countdownUnits } from "@/lib/wedding";
+import type { RevealRef } from "@/hooks/useReveal";
 
 const CELL =
   "flex h-[26px] w-[26px] items-center justify-center font-serif-display text-[15px] text-[#3A3330]";
@@ -13,11 +14,7 @@ const PLACEHOLDER = [
   { value: "--", label: "SEC", hasSep: false },
 ];
 
-export function WeddingDate({
-  revealRef,
-}: {
-  revealRef: (n: HTMLElement | null) => void;
-}) {
+export function WeddingDate({ revealRef }: { revealRef: RevealRef }) {
   // 서버와 클라이언트의 Date.now() 가 달라 hydration 이 깨지므로 첫 렌더는 placeholder.
   const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
@@ -36,14 +33,14 @@ export function WeddingDate({
       <SectionHeading title="WEDDING DATE" />
 
       <div className="relative mx-auto mt-11 w-[74%] rotate-[-2.5deg]">
-        <img
+        <img loading="lazy" decoding="async"
           src="/images/tape-yellow.webp"
           alt=""
           className="pointer-events-none absolute -top-[58px] left-[46%] z-2 -ml-[56px] w-[112px]
             rotate-6 select-none [filter:drop-shadow(0_2px_3px_rgba(60,50,40,.16))]"
         />
         <div className="bg-white px-3 pt-3 pb-5 shadow-[0_6px_18px_rgba(60,50,40,.14)]">
-          <img
+          <img loading="lazy" decoding="async"
             src="/images/date-photo.webp"
             alt="date photo"
             className="block aspect-square w-full select-none bg-[#EDEAE7] object-cover"
@@ -52,7 +49,7 @@ export function WeddingDate({
             see you there :)
           </div>
         </div>
-        <img
+        <img loading="lazy" decoding="async"
           src="/images/sticker-clip.webp"
           alt=""
           // 기울기는 wsticker-r 키프레임에 들어 있다 (transform 애니메이션이 rotate-* 클래스를 덮어씀).
@@ -76,7 +73,7 @@ export function WeddingDate({
                   font-serif-display text-[16px] font-semibold text-[#C6362F]
                   animate-[wday_1.8s_ease-in-out_infinite]"
                 >
-                  <img
+                  <img loading="lazy" decoding="async"
                     src="/images/arrow-mark.webp"
                     alt=""
                     className="pointer-events-none absolute top-[35%] right-full w-[33px] select-none

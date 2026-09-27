@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { WEDDING_AT, calendarRows, countdownUnits } from "@/lib/wedding";
+import { WEDDING_AT, calendarRows, countdownUnits, p2 } from "@/lib/wedding";
 
 describe("countdownUnits", () => {
   it("예식 2일 3시간 4분 5초 전이면 각 단위를 2자리로 채운다", () => {
@@ -34,5 +34,32 @@ describe("calendarRows", () => {
 
   it("29일만 isTarget 이다", () => {
     expect(rows.flat().filter((c) => c.isTarget).map((c) => c.label)).toEqual(["29"]);
+  });
+});
+
+describe("WEDDING_AT", () => {
+  // 실행 환경 타임존과 무관하게 KST 2026-11-29 16:20 한 점을 가리켜야 한다.
+  // 로컬 타임존 해석이면 이 값이 TZ 에 따라 흔들린다.
+  // 위 countdownUnits 테스트들이 전부 WEDDING_AT 기준 상대시각이라 TZ 가 틀려도 통과한다 —
+  // 그래서 이 절대값 단정이 필요하다.
+  it("KST 2026-11-29 16:20 을 가리킨다", () => {
+    expect(WEDDING_AT.toISOString()).toBe("2026-11-29T07:20:00.000Z");
+  });
+
+  it("예식 시각 그 순간에는 모든 단위가 0 이다", () => {
+    const units = countdownUnits(WEDDING_AT.getTime());
+    expect(units.map((u) => u.value)).toEqual(["0", "00", "00", "00"]);
+  });
+});
+
+describe("p2", () => {
+  it("한 자리는 0 을 채운다", () => {
+    expect(p2(0)).toBe("00");
+    expect(p2(9)).toBe("09");
+  });
+
+  it("두 자리 이상은 그대로 둔다", () => {
+    expect(p2(10)).toBe("10");
+    expect(p2(123)).toBe("123");
   });
 });

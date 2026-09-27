@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { CREDITS } from "@/lib/data";
+import type { RevealRef } from "@/hooks/useReveal";
 
-export function Outro({ revealRef }: { revealRef: (n: HTMLElement | null) => void }) {
+export function Outro({ revealRef }: { revealRef: RevealRef }) {
   const credits = useRef<HTMLDivElement>(null);
   const [run, setRun] = useState(false);
 
@@ -18,7 +19,7 @@ export function Outro({ revealRef }: { revealRef: (n: HTMLElement | null) => voi
 
   return (
     <section ref={revealRef} className="relative h-[calc(100dvh/var(--card-zoom))] overflow-hidden bg-[#221D1C]">
-      <img src="/images/outro.webp" alt=""
+      <img loading="lazy" decoding="async" src="/images/outro.webp" alt=""
         className="absolute inset-0 h-full w-full select-none object-cover" />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,12,11,.72)_0%,rgba(15,12,11,.6)_45%,rgba(15,12,11,.88)_100%)]" />
 

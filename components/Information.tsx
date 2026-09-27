@@ -2,15 +2,12 @@
 import { useEffect, useRef, useState } from "react";
 import { SectionHeading } from "./SectionHeading";
 import { INFO_TEXTS } from "@/lib/data";
+import type { RevealRef } from "@/hooks/useReveal";
 
 const MASK =
   "linear-gradient(to right,transparent 0,#000 16%,#000 74%,transparent 100%)";
 
-export function Information({
-  revealRef,
-}: {
-  revealRef: (n: HTMLElement | null) => void;
-}) {
+export function Information({ revealRef }: { revealRef: RevealRef }) {
   const [i, setI] = useState(0);
   const step = (d: number) =>
     setI((v) => (v + d + INFO_TEXTS.length) % INFO_TEXTS.length);
@@ -41,7 +38,7 @@ export function Information({
         style={{ WebkitMaskImage: MASK, maskImage: MASK }}
         className="mx-auto aspect-1700/600 w-[85%] cursor-pointer touch-pan-y overflow-hidden bg-[#F1EAE6]"
       >
-        <img
+        <img loading="lazy" decoding="async"
           src="/images/info.webp"
           alt=""
           className="h-full w-full select-none object-cover"

@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { SectionHeading } from "./SectionHeading";
 import type { Guest } from "@/lib/guestbook";
 import { useToast } from "./Toast";
+import type { RevealRef } from "@/hooks/useReveal";
 
 const FIELD =
   "h-11 w-full border-0 border-b border-[#E7E1DE] bg-transparent px-0.5 font-body text-[13px] " +
   "text-[#3A3330] outline-none transition-colors duration-250 focus:border-b-[#2E2A27]";
 
-export function GuestBook({ revealRef }: { revealRef: (n: HTMLElement | null) => void }) {
+export function GuestBook({ revealRef }: { revealRef: RevealRef }) {
   const [guests, setGuests] = useState<Guest[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [showAll, setShowAll] = useState(false);

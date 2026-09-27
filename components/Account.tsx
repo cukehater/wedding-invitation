@@ -3,6 +3,7 @@ import { useState } from "react";
 import { SectionHeading } from "./SectionHeading";
 import { ACCOUNT_SIDES } from "@/lib/data";
 import { useToast } from "./Toast";
+import type { RevealRef } from "@/hooks/useReveal";
 
 // ponytail: navigator.clipboard 는 보안 컨텍스트(https/localhost)에만 존재한다. 폰에서 LAN dev(http) 로
 // 열거나 클립보드를 막는 인앱 웹뷰에서는 deprecated 지만 여전히 동작하는 execCommand 로 떨어진다.
@@ -21,7 +22,7 @@ const legacyCopy = (text: string) => {
   return ok;
 };
 
-export function Account({ revealRef }: { revealRef: (n: HTMLElement | null) => void }) {
+export function Account({ revealRef }: { revealRef: RevealRef }) {
   // 원본의 s.acct 와 동일하게 한 번에 한쪽만 열린다.
   const [open, setOpen] = useState<string | null>(null);
   const say = useToast();
@@ -56,11 +57,12 @@ export function Account({ revealRef }: { revealRef: (n: HTMLElement | null) => v
               shadow-[0_3px_12px_rgba(0,0,0,.04)]">
               <button
                 onClick={() => setOpen(isOpen ? null : s.key)}
+                aria-expanded={isOpen}
                 className="relative flex h-[46px] w-full cursor-pointer appearance-none items-center
                   justify-center bg-[rgb(253,252,252)] text-[13.5px] text-[#404040] hover:bg-[#FCFAFA]"
               >
                 <span>{s.title}</span>
-                <span className="absolute right-[18px] text-[11px] text-[#C9C1BE] transition-transform duration-300"
+                <span aria-hidden="true" className="absolute right-[18px] text-[11px] text-[#C9C1BE] transition-transform duration-300"
                   style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
               </button>
               {isOpen && (

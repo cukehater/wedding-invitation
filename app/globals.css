@@ -147,25 +147,6 @@
     transform: translateY(0);
   }
 }
-/* 스톱모션: steps(1, end) 로 각 키프레임을 뚝 끊어 재생해 손으로 옮긴 종이 스티커처럼 보이게 한다.
-   보간이 들어가면 그냥 부드러운 흔들림이 되어버린다. */
-@keyframes wheart {
-  0% {
-    transform: translateX(0) rotate(0deg);
-  }
-  25% {
-    transform: translateX(-5px) rotate(-3deg);
-  }
-  50% {
-    transform: translateX(4px) rotate(2.5deg);
-  }
-  75% {
-    transform: translateX(-2px) rotate(-1.5deg);
-  }
-  100% {
-    transform: translateX(0) rotate(0deg);
-  }
-}
 /* 화살표는 날짜 쪽으로 밀었다 돌아온다. translateY(-50%) 는 원래 Tailwind 의
    -translate-y-1/2 가 하던 수직 정렬인데, transform 애니메이션이 그 클래스를
    덮어쓰므로 키프레임 안으로 가져왔다. */
@@ -189,42 +170,40 @@
     color: #d2413a;
   }
 }
-/* wheart 와 같은 스톱모션 원리. 기울기를 모든 키프레임에 넣어 멈춰 있을 때도 비스듬하다
-   (transform 애니메이션이 -rotate-* 클래스를 덮어쓰기 때문에 클래스로는 못 준다). */
-@keyframes wsticker {
+/* 스톱모션 boil: steps(1, end) 로 프레임을 뚝뚝 끊어 재생한다. 보간이 들어가면 그냥 부드러운
+   흔들림이 되어버린다. 키프레임 간격을 일부러 불균등하게(9/8/14/13/14/14/28%) 둬서 홀드 길이가
+   제각각이다 — 균등 간격이면 메트로놈처럼 규칙적이라 손으로 옮긴 느낌이 죽는다.
+   72~100% 는 긴 정지 구간(숨 고르기).
+   기울기는 --t 로 요소마다 주입한다. 100% 키프레임을 생략하면 그 구간에서 --t 가 풀려
+   스티커가 똑바로 서버리므로 0% 와 같은 값을 반드시 명시한다. */
+@keyframes wboil {
   0% {
-    transform: rotate(-8deg) translateX(0);
+    transform: rotate(var(--t, 0deg)) translate(0, 0);
   }
-  25% {
-    transform: rotate(-11deg) translateX(3px);
+  9% {
+    transform: rotate(calc(var(--t, 0deg) + 1.2deg)) translate(1px, -1px);
   }
-  50% {
-    transform: rotate(-6deg) translateX(-2px);
+  17% {
+    transform: rotate(calc(var(--t, 0deg) - 0.8deg)) translate(-1px, 1px);
   }
-  75% {
-    transform: rotate(-9.5deg) translateX(1px);
+  31% {
+    transform: rotate(calc(var(--t, 0deg) + 0.5deg)) translate(1px, 1px);
+  }
+  44% {
+    transform: rotate(calc(var(--t, 0deg) - 1.1deg)) translate(-1px, 0);
+  }
+  58% {
+    transform: rotate(calc(var(--t, 0deg) + 0.9deg)) translate(0, -1px);
+  }
+  72% {
+    transform: rotate(var(--t, 0deg)) translate(0, 0);
   }
   100% {
-    transform: rotate(-8deg) translateX(0);
+    transform: rotate(var(--t, 0deg)) translate(0, 0);
   }
 }
-/* wsticker 의 오른쪽 기울기 버전. WeddingDate 스티커는 원래 rotate-14 로 반대로 기울어 있다. */
-@keyframes wsticker-r {
-  0% {
-    transform: rotate(14deg) translateX(0);
-  }
-  25% {
-    transform: rotate(17deg) translateX(-3px);
-  }
-  50% {
-    transform: rotate(12deg) translateX(2px);
-  }
-  75% {
-    transform: rotate(15.5deg) translateX(-1px);
-  }
-  100% {
-    transform: rotate(14deg) translateX(0);
-  }
+.boil {
+  animation: wboil var(--d, 2.4s) steps(1, end) var(--dl, 0s) infinite;
 }
 @keyframes wspin {
   to {
@@ -234,12 +213,15 @@
 /* 전정기관 장애가 있는 사용자를 위해 무한 반복 모션만 끈다.
    진입 애니메이션(wfade/wslide/wcredit)은 1회성이라 대상이 아니다. */
 @media (prefers-reduced-motion: reduce) {
-  [class*="wheart"],
-  [class*="wsticker"],
   [class*="warrow"],
   [class*="wday"],
   [class*="wspin"],
   [class*="wpulse"] {
     animation: none !important;
+  }
+  /* 모션만 끄고 기울기는 남긴다. animation: none 만 주면 스티커가 똑바로 서버린다. */
+  .boil {
+    animation: none !important;
+    transform: rotate(var(--t, 0deg));
   }
 }

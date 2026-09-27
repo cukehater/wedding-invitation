@@ -92,11 +92,11 @@ export function Location({ revealRef }: { revealRef: RevealRef }) {
               <ol className="mt-3.5 grid list-none gap-3 p-0">
                 {w.lots.map((l, i) => (
                   <li key={l.name} className="flex gap-2.5">
-                    <span className="mt-[2px] flex h-[17px] w-[17px] shrink-0 items-center justify-center
+                    <span className="mt-0.5 flex h-4.25 w-4.25 shrink-0 items-center justify-center
                       rounded-[99px] bg-[#F1ECE7] font-heading text-[9.5px] font-semibold text-[#8A8079]">
                       {i + 1}
                     </span>
-                    <span className="grid gap-[3px]">
+                    <span className="grid gap-0.75">
                       <span className="text-[12.5px] leading-[1.45] text-[#4A4A4A]">{l.name}</span>
                       <span className="text-[11.5px] leading-[1.45] text-[#B0A8A2]">
                         {l.addr}

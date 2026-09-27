@@ -38,45 +38,74 @@ export function Account({ revealRef }: { revealRef: RevealRef }) {
       } catch {}
     }
     if (!ok) ok = legacyCopy(text);
-    say(ok ? `${who} 계좌번호가 복사되었어요` : "복사에 실패했어요. 길게 눌러 직접 복사해 주세요");
+    say(
+      ok
+        ? `${who} 계좌번호가 복사되었어요`
+        : "복사에 실패했어요. 길게 눌러 직접 복사해 주세요",
+    );
   };
 
   return (
-    <section ref={revealRef} className="px-7 pt-14 pb-[60px] text-center">
+    <section ref={revealRef} className="px-7 pt-14 pb-15 text-center">
       <SectionHeading title="마음 전하실 곳" />
-      <p className="mt-0 mb-[26px] text-[13px] leading-[1.95] text-[#5E5E5E]">
-        축하의 자리에 함께하지 못하시는 분들을 위해<br />계좌번호를 기재합니다.<br /><br />
+      <p className="mt-0 mb-6.5 text-[13px] leading-[1.95] text-[#5E5E5E]">
+        축하의 자리에 함께하지 못하시는 분들을 위해
+        <br />
+        계좌번호를 기재합니다.
+        <br />
+        <br />
         소중한 축하를 보내주심에 깊이 감사드립니다.
       </p>
 
-      <div className="mx-auto grid max-w-[320px] gap-3 text-left">
+      <div className="mx-auto grid max-w-80 gap-3 text-left">
         {ACCOUNT_SIDES.map((s) => {
           const isOpen = open === s.key;
           return (
-            <div key={s.key} className="overflow-hidden rounded-[24px] border border-[#F1ECE7]
-              shadow-[0_3px_12px_rgba(0,0,0,.04)]">
+            <div
+              key={s.key}
+              className="overflow-hidden rounded-[24px] border border-[#F1ECE7]
+              shadow-[0_3px_12px_rgba(0,0,0,.04)]"
+            >
               <button
                 onClick={() => setOpen(isOpen ? null : s.key)}
                 aria-expanded={isOpen}
-                className="relative flex h-[46px] w-full cursor-pointer appearance-none items-center
+                className="relative flex h-11.5 w-full cursor-pointer appearance-none items-center
                   justify-center bg-[rgb(253,252,252)] text-[13.5px] text-[#404040] hover:bg-[#FCFAFA]"
               >
                 <span>{s.title}</span>
-                <span aria-hidden="true" className="absolute right-[18px] text-[11px] text-[#C9C1BE] transition-transform duration-300"
-                  style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+                <span
+                  aria-hidden="true"
+                  className="absolute right-4.5 text-[11px] text-[#C9C1BE] transition-transform duration-300"
+                  style={{
+                    transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                  }}
+                >
+                  ▼
+                </span>
               </button>
               {isOpen && (
-                <div className="grid animate-[wfade_.35s_ease_both] gap-2 bg-[rgb(253,252,252)] px-[14px] pt-0.5 pb-4">
+                <div className="grid animate-[wfade_.35s_ease_both] gap-2 bg-[rgb(253,252,252)] px-3.5 pt-0.5 pb-4">
                   {s.rows.map((r) => (
-                    <button key={r.acct} onClick={() => copy(r.acct, r.name)}
+                    <button
+                      key={r.acct}
+                      onClick={() => copy(r.acct, r.name)}
                       className="flex cursor-pointer appearance-none items-center justify-between gap-2.5
-                        rounded-[14px] bg-[#FBF8F5] px-[14px] py-[13px] hover:bg-[#F8F1E9]">
+                        rounded-[14px] bg-[#FBF8F5] px-3.5 py-3.25 hover:bg-[#F8F1E9]"
+                    >
                       <span className="grid gap-1 text-left">
-                        <span className="text-[10.5px] tracking-[.06em] text-[#B0A8A2]">{r.role} {r.name}</span>
-                        <span className="text-[12.5px] text-[#4A4A4A]">{r.acct}</span>
+                        <span className="text-[10.5px] tracking-[.06em] text-[#B0A8A2]">
+                          {r.role} {r.name}
+                        </span>
+                        <span className="text-[12.5px] text-[#4A4A4A]">
+                          {r.acct}
+                        </span>
                       </span>
-                      <span className="rounded-[99px] border border-[#FFDCBC] px-[11px] py-1.5
-                        text-[10.5px] whitespace-nowrap text-[#FF9A42]">복사</span>
+                      <span
+                        className="rounded-[99px] border border-[#FFDCBC] px-2.75 py-1.5
+                        text-[10.5px] whitespace-nowrap text-[#FF9A42]"
+                      >
+                        복사
+                      </span>
                     </button>
                   ))}
                 </div>

@@ -31,9 +31,9 @@ export function Gallery({ revealRef }: { revealRef: RevealRef }) {
 
   return (
     <>
-      <section ref={revealRef} className="pt-[22px] pb-14">
+      <section ref={revealRef} className="pt-5.5 pb-14">
         <SectionHeading title="WEDDING GALLERY" />
-        <div ref={wrapRef} className="relative mx-auto aspect-736/1000 w-[76%] max-w-[320px]">
+        <div ref={wrapRef} className="relative mx-auto aspect-736/1000 w-[76%] max-w-80">
           {GALLERY.map((g, i) => (
             <div
               key={g.src}
@@ -46,7 +46,7 @@ export function Gallery({ revealRef }: { revealRef: RevealRef }) {
             </div>
           ))}
         </div>
-        <div className="mt-[26px] flex items-center justify-center gap-[9px] font-heading
+        <div className="mt-6.5 flex items-center justify-center gap-2.25 font-heading
           text-[9.5px] font-medium tracking-[.2em] uppercase text-[#B4A9A3]">
           <span>←</span><span>swipe</span><span>→</span>
         </div>
@@ -57,7 +57,7 @@ export function Gallery({ revealRef }: { revealRef: RevealRef }) {
           className="fixed inset-0 z-60 flex animate-[wfade_.25s_ease_both] cursor-zoom-out
             items-center justify-center bg-[rgba(30,25,24,.9)] p-6">
           <img src={GALLERY[box].src} alt={GALLERY[box].alt} decoding="async"
-            className="max-h-[86vh] w-full max-w-[380px] select-none rounded-lg object-contain" />
+            className="max-h-[86vh] w-full max-w-95 select-none rounded-lg object-contain" />
           <button aria-label="이전 사진" onClick={(e) => { e.stopPropagation(); step(-1); }}
             className={`${ARROW} left-2.5`}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFF7F3"
@@ -72,7 +72,7 @@ export function Gallery({ revealRef }: { revealRef: RevealRef }) {
               <polyline points="10 5 17 12 10 19" />
             </svg>
           </button>
-          <div className="absolute inset-x-0 bottom-[26px] text-center font-heading text-[11.5px]
+          <div className="absolute inset-x-0 bottom-6.5 text-center font-heading text-[11.5px]
             tracking-[.1em] text-[rgba(255,247,243,.72)]">
             {p2(box + 1)} / {GALLERY.length}
           </div>

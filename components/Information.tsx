@@ -30,7 +30,7 @@ export function Information({ revealRef }: { revealRef: RevealRef }) {
   };
 
   return (
-    <section ref={revealRef} className="pt-11 pb-[52px]">
+    <section ref={revealRef} className="pt-11 pb-13">
       <SectionHeading title="INFOMATION" />
       <div
         onPointerDown={onDown}
@@ -44,7 +44,7 @@ export function Information({ revealRef }: { revealRef: RevealRef }) {
           className="h-full w-full select-none object-cover"
         />
       </div>
-      <p className="mx-auto mt-7 max-w-[290px] text-center font-body text-[13.5px] leading-[1.6] text-[#6B6360] whitespace-pre-line">
+      <p className="mx-auto mt-7 max-w-72.5 text-center font-body text-[13.5px] leading-[1.6] text-[#6B6360] whitespace-pre-line">
         {INFO_TEXTS[i]}
       </p>
       <div className="mt-5 flex justify-center gap-1.5">

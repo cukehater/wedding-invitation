@@ -8,7 +8,7 @@ export function SectionHeading({ title }: { title: string }) {
           className="h-5 w-5 select-none animate-[wspin_9s_linear_infinite]"
         />
       </div>
-      <h3 className="mt-4 mb-[30px] text-center font-heading text-[22px] font-normal leading-none tracking-normal text-[#2E2A27]">
+      <h3 className="mt-4 mb-7.5 text-center font-heading text-[22px] font-normal leading-none tracking-normal text-[#2E2A27]">
         {title}
       </h3>
     </>

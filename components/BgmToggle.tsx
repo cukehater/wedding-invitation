@@ -47,7 +47,7 @@ export function BgmToggle() {
       {/* zoom 은 상속되지 않으므로 확대된 카드 폭(--card-w)에 직접 맞춘다.
           ponytail: 카드 내부 14px 여백이 확대 시 16.3px 가 되는 2px 차이는 무시한다. */}
       <div
-        className="flex w-full justify-center px-[14px] pt-[14px]"
+        className="flex w-full justify-center px-3.5 pt-3.5"
         style={{ maxWidth: "var(--card-w)" }}
       >
         <audio
@@ -66,11 +66,11 @@ export function BgmToggle() {
           aria-label="배경음악"
           className="pointer-events-auto flex h-8 cursor-pointer appearance-none items-center gap-2 rounded-[99px] border border-[rgba(255,255,255,.28)] bg-[rgba(26,22,20,.32)] px-3 backdrop-blur-[10px] backdrop-saturate-[1.4] transition-colors duration-250 hover:bg-[rgba(26,22,20,.46)]"
         >
-          <span className="flex h-[13px] items-end gap-[2.5px]">
+          <span className="flex h-3.25 items-end gap-[2.5px]">
             {[0, 0.18, 0.36].map((delay) => (
               <span
                 key={delay}
-                className="w-[2px] origin-bottom rounded-[2px] bg-[#FFF7F3]"
+                className="w-0.5 origin-bottom rounded-[2px] bg-[#FFF7F3]"
                 style={{
                   height: 13,
                   animation: `weq .9s ease-in-out ${delay}s infinite`,

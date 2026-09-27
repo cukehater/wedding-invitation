@@ -44,12 +44,18 @@ export function GuestBook({ revealRef }: { revealRef: RevealRef }) {
       const res = await fetch("/api/guestbook", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), password: pw, msg: msg.trim() }),
+        body: JSON.stringify({
+          name: name.trim(),
+          password: pw,
+          msg: msg.trim(),
+        }),
       });
       const data = await res.json();
       if (!res.ok) return say(data.error ?? "등록하지 못했어요");
       setGuests((g) => [data.guest as Guest, ...g]);
-      setName(""); setPw(""); setMsg("");
+      setName("");
+      setPw("");
+      setMsg("");
       say("축하 메시지가 등록되었어요");
     } catch {
       say("등록하지 못했어요");
@@ -86,12 +92,24 @@ export function GuestBook({ revealRef }: { revealRef: RevealRef }) {
     <section ref={revealRef} className="px-5 pt-11 pb-14">
       <SectionHeading title="GUEST BOOK" />
       <p className="m-0 text-center font-body text-[13.5px] leading-[1.95] text-[#6B6360]">
-        신랑신부에게 축하메시지를 남겨주세요 <span className="text-[#FF9A42]">♡</span>
+        신랑신부에게 축하메시지를 남겨주세요{" "}
+        <span className="text-[#FF9A42]">♡</span>
       </p>
 
-      <div className="mt-[26px] grid grid-cols-2 gap-4">
-        <input value={name} onChange={(e) => setName(e.target.value.slice(0, 20))} placeholder="이름" className={FIELD} />
-        <input value={pw} onChange={(e) => setPw(e.target.value.slice(0, 20))} type="password" placeholder="비밀번호" className={FIELD} />
+      <div className="mt-6.5 grid grid-cols-2 gap-4">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value.slice(0, 20))}
+          placeholder="이름"
+          className={FIELD}
+        />
+        <input
+          value={pw}
+          onChange={(e) => setPw(e.target.value.slice(0, 20))}
+          type="password"
+          placeholder="비밀번호"
+          className={FIELD}
+        />
       </div>
 
       <textarea
@@ -99,11 +117,11 @@ export function GuestBook({ revealRef }: { revealRef: RevealRef }) {
         onChange={(e) => setMsg(e.target.value.slice(0, 40))}
         rows={3}
         placeholder="축하 메시지를 남겨주세요 (40자 이내)"
-        className="mt-5 min-h-[84px] w-full resize-none border-0 border-b border-[#E7E1DE] bg-transparent
+        className="mt-5 min-h-21 w-full resize-none border-0 border-b border-[#E7E1DE] bg-transparent
           px-0.5 py-1.5 font-body text-[13px] leading-[1.8] text-[#3A3330] outline-none
           transition-colors duration-250 focus:border-b-[#2E2A27]"
       />
-      <div className="mt-[7px] text-right font-heading text-[10px] tracking-[.08em] text-[#B8B0AA]">
+      <div className="mt-1.75 text-right font-heading text-[10px] tracking-[.08em] text-[#B8B0AA]">
         {msg.length} / 40
       </div>
 
@@ -123,33 +141,53 @@ export function GuestBook({ revealRef }: { revealRef: RevealRef }) {
       </button>
 
       {loaded && guests.length === 0 && (
-        <p className="mt-[34px] mb-0 text-center font-body text-[13px] leading-[1.9] text-[#B8B0AA]">
-          아직 남겨진 메시지가 없어요.<br />첫 축하를 남겨주세요 :)
+        <p className="mt-8.5 mb-0 text-center font-body text-[13px] leading-[1.9] text-[#B8B0AA]">
+          아직 남겨진 메시지가 없어요.
+          <br />첫 축하를 남겨주세요 :)
         </p>
       )}
 
-      <div className="mt-[34px] grid gap-4">
+      <div className="mt-8.5 grid gap-4">
         {visible.map((g, i) => (
-          <div key={g.id} className="flex" style={{ justifyContent: i % 2 ? "flex-end" : "flex-start" }}>
-            <div className="w-[82%] animate-[wfade_.5s_ease_both] rounded-[26px] border border-[#EFE9EA]
-              bg-[#FDFCFC] px-6 py-[22px] shadow-[0_2px_8px_rgba(0,0,0,.03)]">
+          <div
+            key={g.id}
+            className="flex"
+            style={{ justifyContent: i % 2 ? "flex-end" : "flex-start" }}
+          >
+            <div
+              className="w-[82%] animate-[wfade_.5s_ease_both] rounded-[26px] border border-[#EFE9EA]
+              bg-[#FDFCFC] px-6 py-5.5 shadow-[0_2px_8px_rgba(0,0,0,.03)]"
+            >
               <div className="flex items-baseline justify-between gap-2">
                 <span className="text-[12.5px] text-[#7A7A7A]">{g.name}</span>
-                <span className="flex items-center gap-[5px]">
+                <span className="flex items-center gap-1.25">
                   <span className="text-[10.5px] text-[#C4BCB6]">{g.date}</span>
-                  <button onClick={() => openDelete(g.id)} aria-label="삭제"
+                  <button
+                    onClick={() => openDelete(g.id)}
+                    aria-label="삭제"
                     aria-expanded={deleting === g.id}
                     className="flex h-5 w-5 cursor-pointer appearance-none items-center justify-center
-                      text-[#C4BCB6] transition-colors hover:text-[#8A8079]">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="3 6 21 6" /><path d="M8 6V4h8v2" />
-                      <path d="M6 6l1 14h10l1-14" /><path d="M10 11v6M14 11v6" />
+                      text-[#C4BCB6] transition-colors hover:text-[#8A8079]"
+                  >
+                    <svg
+                      width="13"
+                      height="13"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="3 6 21 6" />
+                      <path d="M8 6V4h8v2" />
+                      <path d="M6 6l1 14h10l1-14" />
+                      <path d="M10 11v6M14 11v6" />
                     </svg>
                   </button>
                 </span>
               </div>
-              <p className="mt-2.5 mb-0 text-[15px] leading-[1.8] break-words text-[#4A4A4A] text-pretty">
+              <p className="mt-2.5 mb-0 text-[14px] leading-[1.6] break-keep text-[#4A4A4A] text-pretty w-full">
                 {g.msg}
               </p>
 
@@ -165,9 +203,11 @@ export function GuestBook({ revealRef }: { revealRef: RevealRef }) {
                     className="h-8 min-w-0 flex-1 border-0 border-b border-[#E7E1DE] bg-transparent px-0.5
                       font-body text-[12.5px] text-[#3A3330] outline-none focus:border-b-[#2E2A27]"
                   />
-                  <button onClick={() => confirmDelete(g.id)}
+                  <button
+                    onClick={() => confirmDelete(g.id)}
                     className="h-8 shrink-0 cursor-pointer appearance-none rounded-[99px] bg-[#2E2A27] px-3
-                      font-heading text-[10.5px] tracking-[.1em] text-white">
+                      font-heading text-[10.5px] tracking-[.1em] text-white"
+                  >
                     삭제
                   </button>
                 </div>
@@ -179,10 +219,12 @@ export function GuestBook({ revealRef }: { revealRef: RevealRef }) {
 
       {!showAll && guests.length > 4 && (
         <div className="mt-6 flex justify-center">
-          <button onClick={() => setShowAll(true)}
+          <button
+            onClick={() => setShowAll(true)}
             className="cursor-pointer appearance-none border-b border-[#DED8D6] px-0.5 py-1
               font-heading text-[11.5px] tracking-[.16em] text-[#6B6360] transition-colors
-              hover:border-[#2E2A27] hover:text-[#2E2A27]">
+              hover:border-[#2E2A27] hover:text-[#2E2A27]"
+          >
             VIEW MORE
           </button>
         </div>

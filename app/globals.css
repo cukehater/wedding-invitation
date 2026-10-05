@@ -7,10 +7,6 @@
   --font-tangerine: var(--font-tangerine-src), cursive;
   --font-alexbrush: var(--font-alexbrush-src), cursive;
   --font-body: var(--font-plexkr), sans-serif;
-
-  --color-paper: #edeae6;
-  --color-ink: #2e2a27;
-  --color-accent: #ff9a42;
 }
 
 /* 카드는 430px 폭 기준으로 디자인됐다. 500px 로 키우되 모든 px 값을 다시 쓰지 않도록
@@ -94,25 +90,12 @@
   ::selection {
     background: #f7dde3;
   }
-  div::-webkit-scrollbar {
-    display: none;
-  }
 }
 
 @keyframes wfade {
   from {
     opacity: 0;
     transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes wslide {
-  from {
-    opacity: 0;
-    transform: translateX(-24px);
   }
   to {
     opacity: 1;
@@ -130,17 +113,6 @@
 }
 .eq-bar {
   animation: weq 0.9s ease-in-out infinite;
-}
-@keyframes wpulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
 }
 @keyframes wcredit {
   from {
@@ -214,12 +186,11 @@
   }
 }
 /* 전정기관 장애가 있는 사용자를 위해 무한 반복 모션만 끈다.
-   진입 애니메이션(wfade/wslide/wcredit)은 1회성이라 대상이 아니다. */
+   진입 애니메이션(wfade/wcredit)은 1회성이라 대상이 아니다. */
 @media (prefers-reduced-motion: reduce) {
   [class*="warrow"],
   [class*="wday"],
   [class*="wspin"],
-  [class*="wpulse"],
   .eq-bar {
     animation: none !important;
   }

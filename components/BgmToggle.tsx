@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { armAutoplay } from "@/lib/autoplay";
 import { useToast } from "./Toast";
 
-// 앞 3초는 인트로라 건너뛴다. 반복 재생도 매번 여기서 시작한다.
+// 앞머리 인트로 구간을 건너뛴다. 반복 재생도 매번 여기서 시작한다.
 const START_AT = 4.05;
 
 export function BgmToggle() {

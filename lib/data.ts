@@ -101,7 +101,7 @@ export const CREDITS = [
   { k: "Forever with", v: "Love & Happiness" },
 ];
 
-export const GALLERY = Array.from({ length: 10 }, (_, i) => {
+export const GALLERY = Array.from({ length: 20 }, (_, i) => {
   const n = String(i + 1).padStart(2, "0");
   return { src: `/images/gallery/g${n}.webp`, alt: `갤러리 사진 ${n}` };
 });

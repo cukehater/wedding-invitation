@@ -44,30 +44,36 @@ export function Information({ revealRef }: { revealRef: RevealRef }) {
   return (
     <section ref={revealRef} className="pt-11 pb-13">
       <SectionHeading title="INFOMATION" />
+      {/* 이미지뿐 아니라 텍스트·인디케이터 위에서도 스와이프되도록 핸들러를 감싸는 쪽에 둔다. */}
       <div
         onPointerDown={onDown}
         onPointerUp={onUp}
         onPointerCancel={onCancel}
-        style={{ WebkitMaskImage: MASK, maskImage: MASK }}
-        className="mx-auto aspect-1700/600 w-[85%] cursor-grab touch-pan-y overflow-hidden bg-[#F1EAE6]"
+        className="cursor-grab touch-pan-y select-none"
       >
-        <img loading="lazy" decoding="async"
-          src="/images/info.webp"
-          alt=""
-          className="h-full w-full select-none object-cover"
-        />
-      </div>
-      <p className="mx-auto mt-7 max-w-72.5 text-center font-body text-[13.5px] leading-[1.6] text-[#6B6360] whitespace-pre-line">
-        {INFO_TEXTS[i]}
-      </p>
-      <div className="mt-5 flex justify-center gap-1.5">
-        {INFO_TEXTS.map((_, idx) => (
-          <span
-            key={idx}
-            style={{ background: idx === i ? "#2E2A27" : "#DED8D6" }}
-            className="h-1 w-1 rounded-[99px] transition-all duration-350"
+        <div
+          style={{ WebkitMaskImage: MASK, maskImage: MASK }}
+          className="mx-auto aspect-1700/600 w-[85%] overflow-hidden bg-[#F1EAE6]"
+        >
+          <img loading="lazy" decoding="async"
+            src="/images/info.webp"
+            alt=""
+            draggable={false}
+            className="h-full w-full select-none object-cover"
           />
-        ))}
+        </div>
+        <p className="mx-auto mt-7 max-w-72.5 text-center font-body text-[13.5px] leading-[1.6] text-[#6B6360] whitespace-pre-line">
+          {INFO_TEXTS[i]}
+        </p>
+        <div className="mt-5 flex justify-center gap-1.5">
+          {INFO_TEXTS.map((_, idx) => (
+            <span
+              key={idx}
+              style={{ background: idx === i ? "#2E2A27" : "#DED8D6" }}
+              className="h-1 w-1 rounded-[99px] transition-all duration-350"
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

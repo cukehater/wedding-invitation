@@ -1,8 +1,9 @@
 export function Cover() {
   return (
     <section className="relative aspect-[1/1.75] min-h-140 overflow-hidden bg-[#EFEAE4]">
-      <img fetchPriority="high"
-        src="/images/hero.webp"
+      <img
+        fetchPriority="high"
+        src="/images/cover.webp"
         alt="cover"
         className="absolute inset-0 h-full w-full select-none object-cover grayscale"
       />

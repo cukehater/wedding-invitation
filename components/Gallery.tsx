@@ -48,7 +48,7 @@ export function Gallery({ revealRef }: { revealRef: RevealRef }) {
               className="absolute inset-0 cursor-grab touch-pan-y overflow-hidden rounded-md
                 bg-[#F1EAE6] select-none will-change-transform"
             >
-              <img src={g.src} alt={g.alt} draggable={false} loading="lazy" decoding="async"
+              <img src={g.src} alt={g.alt} style={g.style} draggable={false} loading="lazy" decoding="async"
                 className="pointer-events-none block h-full w-full select-none object-cover" />
             </div>
           ))}

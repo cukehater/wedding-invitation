@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 export const VENUE = {
   name: "더파티움 안양, 7F 라포레 홀",
   address: "경기 안양시 동안구 시민대로 311 (관양동 1746)",
@@ -94,16 +96,37 @@ export const INFO_TEXTS = [
 ];
 
 export const CREDITS = [
-  { k: "Produced by", v: "Our Family" },
+  { k: "Directed by", v: "김경식 & 김수민" },
+  { k: "Producers", v: "김홍창 · 박귀자 · 윤경애" },
   { k: "Story begins", v: "Since 2022" },
-  { k: "Directed by", v: "김경식, 김수민" },
+  { k: "Premiere", v: "2026. 11. 29. SUN 4:20 PM" },
+  { k: "Location", v: "더파티움 안양 라포레 홀" },
   { k: "Special thanks to", v: "축하를 보내주신 모든 분들" },
-  { k: "Forever with", v: "Love & Happiness" },
 ];
+
+// 세로 카드에서 기본 중앙 crop 시 얼굴이 벗어나는 사진만 보정.
+// 가로 사진은 object-position, 세로 사진은 가로 여유가 없어 scale 로 확대해 맞춘다.
+const CROP: Record<string, CSSProperties> = {
+  "01": { transform: "scale(1.4)", transformOrigin: "54% 92%" },
+  "04": { transform: "scale(1.25)", transformOrigin: "75% 100%" },
+  "05": { objectPosition: "76% 50%" },
+  "07": { transform: "scale(2)", transformOrigin: "14% 38%" },
+  "08": { objectPosition: "8% 50%" },
+  "09": { objectPosition: "33% 50%" },
+  "11": { transform: "scale(1.3)", transformOrigin: "35% 25%" },
+  "12": { transform: "scale(1.3)", transformOrigin: "57% 33%" },
+  "13": { transform: "scale(1.35)", transformOrigin: "37% 45%" },
+  "14": { objectPosition: "50% 0%", transform: "scale(1.25)", transformOrigin: "33% 0%" },
+  "15": { objectPosition: "50% 0%", transform: "scale(1.2)", transformOrigin: "10% 0%" },
+  "17": { objectPosition: "15% 50%" },
+  "18": { objectPosition: "85% 50%" },
+  "19": { transform: "scale(1.3)", transformOrigin: "43% 75%" },
+  "20": { objectPosition: "62% 50%" },
+};
 
 export const GALLERY = Array.from({ length: 20 }, (_, i) => {
   const n = String(i + 1).padStart(2, "0");
-  return { src: `/images/gallery/g${n}.webp`, alt: `갤러리 사진 ${n}` };
+  return { src: `/images/gallery/g${n}.webp`, alt: `갤러리 사진 ${n}`, style: CROP[n] };
 });
 
 // 티맵 경로안내 스킴은 iOS 와 Android 의 파라미터 이름이 다르다 (rGoName/rGoX/rGoY vs goalname/goalx/goaly).

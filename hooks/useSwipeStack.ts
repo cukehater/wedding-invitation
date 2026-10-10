@@ -53,15 +53,18 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
       ) || 1;
 
     let cycleTimer: ReturnType<typeof setTimeout>;
+    // 직전 제스처가 드래그였는지. 드래그 끝에 브라우저가 click 을 보내도 라이트박스를 열지 않는다.
+    let dragged = false;
     let drag: {
       id: number; x: number; y: number; dx: number; dy: number;
-      card: HTMLDivElement; t: number; axis: "x" | "y" | null; zoom: number;
+      card: HTMLDivElement; axis: "x" | "y" | null; zoom: number;
     } | null = null;
 
     const down = (e: PointerEvent) => {
       const top = cards[orderRef.current[0]];
       if (!top || !top.contains(e.target as Node)) return;
-      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, dx: 0, dy: 0, card: top, t: Date.now(), axis: null, zoom: cardZoom() };
+      dragged = false;
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, dx: 0, dy: 0, card: top, axis: null, zoom: cardZoom() };
       top.style.transition = "none";
       top.style.cursor = "grabbing";
       try { top.setPointerCapture(e.pointerId); } catch {}
@@ -74,6 +77,9 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
       if (!drag.axis && Math.abs(drag.dx) + Math.abs(drag.dy) > 8) {
         drag.axis = Math.abs(drag.dx) >= Math.abs(drag.dy) ? "x" : "y";
       }
+      // 축 판정(8px)보다 넉넉하게 잡는다. 탭하다 손가락이 조금 밀린 정도는 브라우저도 click 으로 보는데
+      // 여기서 막으면 라이트박스가 안 열린다.
+      if (Math.abs(drag.dx) + Math.abs(drag.dy) > 16) dragged = true;
       if (drag.axis === "y") return;
       if (e.cancelable) e.preventDefault();
       drag.card.style.transform =
@@ -88,12 +94,6 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
       d.card.style.cursor = "grab";
       const threshold = Math.max(56, wrap.clientWidth * 0.25);
 
-      // 8px 미만 + 450ms 미만이면 드래그가 아니라 탭 → 라이트박스
-      if (Math.abs(d.dx) + Math.abs(d.dy) < 8 && Date.now() - d.t < 450) {
-        layout(true);
-        onTapRef.current(cards.indexOf(d.card));
-        return;
-      }
       if (d.axis === "x" && Math.abs(d.dx) > threshold) {
         const dir = d.dx > 0 ? 1 : -1;
         d.card.style.transition = "transform .46s cubic-bezier(.32,.72,.36,1), opacity .42s ease";
@@ -111,13 +111,24 @@ export function useSwipeStack(count: number, onTap: (index: number) => void) {
       layout(true);
     };
 
+    // 라이트박스는 pointerup 이 아니라 click 에서 연다. 안드로이드(갤럭시 카카오 인앱 등)는
+    // pointerup 뒤에 click 을 그 순간 그 좌표의 요소로 보내서, pointerup 에서 연 오버레이가
+    // 그 click 을 받아 바로 닫혔다. 탭 판정(시간·흔들림 허용치)도 브라우저 기준을 따르게 된다.
+    const click = (e: MouseEvent) => {
+      const top = cards[orderRef.current[0]];
+      if (dragged || !top || !top.contains(e.target as Node)) return;
+      onTapRef.current(orderRef.current[0]);
+    };
+
     wrap.addEventListener("pointerdown", down);
+    wrap.addEventListener("click", click);
     window.addEventListener("pointermove", move, { passive: false });
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", up);
     return () => {
       clearTimeout(cycleTimer);
       wrap.removeEventListener("pointerdown", down);
+      wrap.removeEventListener("click", click);
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
       window.removeEventListener("pointercancel", up);

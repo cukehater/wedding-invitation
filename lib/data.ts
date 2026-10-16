@@ -108,9 +108,9 @@ export const CREDITS = [
 // 가로 사진은 object-position, 세로 사진은 가로 여유가 없어 scale 로 확대해 맞춘다.
 const CROP: Record<string, CSSProperties> = {
   "01": { transform: "scale(1.4)", transformOrigin: "54% 92%" },
+  "03": { transform: "scale(2)", transformOrigin: "14% 38%" },
   "04": { transform: "scale(1.25)", transformOrigin: "75% 100%" },
   "05": { objectPosition: "76% 50%" },
-  "07": { transform: "scale(2)", transformOrigin: "14% 38%" },
   "08": { objectPosition: "8% 50%" },
   "09": { objectPosition: "33% 50%" },
   "11": { transform: "scale(1.3)", transformOrigin: "35% 25%" },

@@ -97,7 +97,9 @@ export const INFO_TEXTS = [
 
 export const CREDITS = [
   { k: "Directed by", v: "김경식 & 김수민" },
-  { k: "Producers", v: "김홍창 · 박귀자 · 윤경애" },
+  { k: "Produced by", v: "김홍창 · 박귀자 · 윤경애" },
+  { k: "Song by", v: "박진주 · 박종욱" },
+  { k: "Speech by", v: "방혜령" },
   { k: "Story begins", v: "Since 2022" },
   { k: "Premiere", v: "2026. 11. 29. SUN 4:20 PM" },
   { k: "Location", v: "더파티움 안양 라포레 홀" },
@@ -116,8 +118,16 @@ const CROP: Record<string, CSSProperties> = {
   "11": { transform: "scale(1.3)", transformOrigin: "35% 25%" },
   "12": { transform: "scale(1.3)", transformOrigin: "57% 33%" },
   "13": { transform: "scale(1.35)", transformOrigin: "37% 45%" },
-  "14": { objectPosition: "50% 0%", transform: "scale(1.25)", transformOrigin: "33% 0%" },
-  "15": { objectPosition: "50% 0%", transform: "scale(1.2)", transformOrigin: "10% 0%" },
+  "14": {
+    objectPosition: "50% 0%",
+    transform: "scale(1.25)",
+    transformOrigin: "33% 0%",
+  },
+  "15": {
+    objectPosition: "50% 0%",
+    transform: "scale(1.2)",
+    transformOrigin: "10% 0%",
+  },
   "17": { objectPosition: "15% 50%" },
   "18": { objectPosition: "85% 50%" },
   "19": { transform: "scale(1.3)", transformOrigin: "43% 75%" },
@@ -126,7 +136,11 @@ const CROP: Record<string, CSSProperties> = {
 
 export const GALLERY = Array.from({ length: 20 }, (_, i) => {
   const n = String(i + 1).padStart(2, "0");
-  return { src: `/images/gallery/g${n}.webp`, alt: `갤러리 사진 ${n}`, style: CROP[n] };
+  return {
+    src: `/images/gallery/g${n}.webp`,
+    alt: `갤러리 사진 ${n}`,
+    style: CROP[n],
+  };
 });
 
 // 티맵 경로안내 스킴은 iOS 와 Android 의 파라미터 이름이 다르다 (rGoName/rGoX/rGoY vs goalname/goalx/goaly).

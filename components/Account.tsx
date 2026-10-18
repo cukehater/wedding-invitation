@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { SectionHeading } from "./SectionHeading";
 import { ACCOUNT_SIDES } from "@/lib/data";
 import { useToast } from "./Toast";
@@ -23,8 +22,6 @@ const legacyCopy = (text: string) => {
 };
 
 export function Account({ revealRef }: { revealRef: RevealRef }) {
-  // 원본의 s.acct 와 동일하게 한 번에 한쪽만 열린다.
-  const [open, setOpen] = useState<string | null>(null);
   const say = useToast();
 
   const copy = async (text: string, who: string) => {
@@ -58,61 +55,45 @@ export function Account({ revealRef }: { revealRef: RevealRef }) {
       </p>
 
       <div className="mx-auto grid max-w-80 gap-3 text-left">
-        {ACCOUNT_SIDES.map((s) => {
-          const isOpen = open === s.key;
-          return (
-            <div
-              key={s.key}
-              className="overflow-hidden rounded-[24px] border border-[#F1ECE7]
+        {ACCOUNT_SIDES.map((s) => (
+          <div
+            key={s.key}
+            className="overflow-hidden rounded-[24px] border border-[#F1ECE7]
               shadow-[0_3px_12px_rgba(0,0,0,.04)]"
+          >
+            <div
+              className="flex h-11.5 w-full items-center justify-center bg-[rgb(253,252,252)]
+                  text-[13.5px] text-[#404040]"
             >
-              <button
-                onClick={() => setOpen(isOpen ? null : s.key)}
-                aria-expanded={isOpen}
-                className="relative flex h-11.5 w-full cursor-pointer appearance-none items-center
-                  justify-center bg-[rgb(253,252,252)] text-[13.5px] text-[#404040] hover:bg-[#FCFAFA]"
-              >
-                <span>{s.title}</span>
-                <span
-                  aria-hidden="true"
-                  className="absolute right-4.5 text-[11px] text-[#C9C1BE] transition-transform duration-300"
-                  style={{
-                    transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                  }}
-                >
-                  ▼
-                </span>
-              </button>
-              {isOpen && (
-                <div className="grid animate-[wfade_.35s_ease_both] gap-2 bg-[rgb(253,252,252)] px-3.5 pt-0.5 pb-4">
-                  {s.rows.map((r) => (
-                    <button
-                      key={r.acct}
-                      onClick={() => copy(r.acct, r.name)}
-                      className="flex cursor-pointer appearance-none items-center justify-between gap-2.5
-                        rounded-[14px] bg-[#FBF8F5] px-3.5 py-3.25 hover:bg-[#F8F1E9]"
-                    >
-                      <span className="grid gap-1 text-left">
-                        <span className="text-[10.5px] tracking-[.06em] text-[#B0A8A2]">
-                          {r.role} {r.name}
-                        </span>
-                        <span className="text-[12.5px] text-[#4A4A4A]">
-                          {r.acct}
-                        </span>
-                      </span>
-                      <span
-                        className="rounded-[99px] border border-[#FFDCBC] px-2.75 py-1.5
-                        text-[10.5px] whitespace-nowrap text-[#FF9A42]"
-                      >
-                        복사
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              )}
+              {s.title}
             </div>
-          );
-        })}
+            <div className="grid gap-2 bg-[rgb(253,252,252)] px-3.5 pt-0.5 pb-4">
+              {s.rows.map((r) => (
+                <button
+                  key={r.acct}
+                  onClick={() => copy(r.acct, r.name)}
+                  className="flex cursor-pointer appearance-none items-center justify-between gap-2.5
+                        rounded-[14px] bg-[#FBF8F5] px-3.5 py-3.25 hover:bg-[#F8F1E9]"
+                >
+                  <span className="grid gap-1 text-left">
+                    <span className="text-[10.5px] tracking-[.06em] text-[#B0A8A2]">
+                      {r.role} {r.name}
+                    </span>
+                    <span className="text-[12.5px] text-[#4A4A4A]">
+                      {r.acct}
+                    </span>
+                  </span>
+                  <span
+                    className="rounded-[99px] border border-[#FFDCBC] px-2.75 py-1.5
+                        text-[10.5px] whitespace-nowrap text-[#FF9A42]"
+                  >
+                    복사
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

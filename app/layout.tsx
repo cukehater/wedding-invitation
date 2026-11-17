@@ -61,18 +61,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: [
-      {
-        url: "/images/favicon/favicon-16x16.png",
-        sizes: "16x16",
-        type: "image/png",
-      },
-      {
-        url: "/images/favicon/favicon-32x32.png",
-        sizes: "32x32",
-        type: "image/png",
-      },
-    ],
+    icon: { url: "/images/favicon/favicon.svg", type: "image/svg+xml" },
     apple: "/images/favicon/apple-touch-icon.png",
   },
   manifest: "/images/favicon/site.webmanifest",
@@ -86,6 +75,7 @@ export const viewport: Viewport = {
   // 삼성 인터넷의 "웹페이지 어두운 모드"와 Chrome auto-dark 가 흰 카드와 사진 색을 반전시킨다.
   // 라이트 전용임을 명시해서 강제 반전을 끈다.
   colorScheme: "light",
+  themeColor: "#FDF9EF",
 };
 
 export default function RootLayout({
